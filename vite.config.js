@@ -1,22 +1,11 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import urlData from "./src/utils/ipconfig";
 import path from 'path'
 import styleImport from 'vite-plugin-style-import'
 import resolveExternalsPlugin from 'vite-plugin-resolve-externals'
+import {get_proxyList} from "./src/scripts/build";
 const projectRootDir = path.resolve(__dirname);
 export default ({command, mode}) => {
-    const proxyList = {};
-// const name = 'ME管理平台'
-    Object.keys(urlData[mode]).forEach(index => {
-        proxyList[`/${index}`] = {
-            target: urlData[mode][index],
-            changeOrigin: true, // 是否跨域
-            pathRewrite: {
-                [`^/${index}`]: "" // 重写接口
-            }
-        };
-    });
     return defineConfig({
         plugins: [vue(), styleImport({
             libs: [{
@@ -33,11 +22,12 @@ export default ({command, mode}) => {
             }]
         }), resolveExternalsPlugin({
             echarts: 'echarts',
-            axios: 'axios'
+            axios: 'axios',
+            md5 : 'js-md5',
         })],
         base: "./",
         server: {
-            proxy: proxyList
+            proxy: get_proxyList(mode)
         },
         resolve: {
             alias: [

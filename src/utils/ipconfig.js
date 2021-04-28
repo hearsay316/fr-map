@@ -12,4 +12,4 @@ const urlData = {
     sso: "http://47.103.125.18/stage-login"
   }
 };
-export default urlData;
+export default (type)=>urlData[type];

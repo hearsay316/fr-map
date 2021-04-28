@@ -2,7 +2,7 @@
   "name": "fr-map",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --mode staging",
+    "dev": "vite ",
     "build": "vite build --mode staging",
     "serve": "vite preview"
   },

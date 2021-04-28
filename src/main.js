@@ -3,6 +3,7 @@ import App from './App.vue'
 import "./router/beforeEach";
 import router from "./router";
 import store from "./store";
+
 import {
     ElAlert,
     ElAside,
@@ -88,7 +89,9 @@ import {
     ElMessageBox,
     ElNotification,
 } from 'element-plus';
+import $http from './utils/request'
 
+console.log($http,'$http$http')
 const components = [
     ElAlert,
     ElAside,
@@ -169,7 +172,6 @@ const components = [
     ElTree,
     ElUpload,
 ]
-
 const plugins = [
     ElInfiniteScroll,
     ElLoading,

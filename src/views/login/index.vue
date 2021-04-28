@@ -57,6 +57,7 @@
 <script>
 import { cookie } from "@/utils/common";
 import { mapActions } from "vuex";
+import {login} from "../../api/login";
 export default {
   name: "Login",
   data() {
@@ -105,10 +106,15 @@ export default {
   },
   methods: {
     // 登录
-    handleLogin() {
+ async   handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
+          login({
+            userCode:this.loginForm.userCode, userPassword:this.loginForm.userPassword
+          }).then(res=>{
+            console.log(res,'ddddd')
+          })
           // 验证账号密码
           // this["user/login"]({
           //   userCode: this.loginForm.userCode,
