@@ -2,6 +2,7 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import urlData from "./src/utils/ipconfig";
 import path from 'path'
+import styleImport from 'vite-plugin-style-import'
 import resolveExternalsPlugin from 'vite-plugin-resolve-externals'
 const projectRootDir = path.resolve(__dirname);
 export default ({command, mode}) => {
@@ -17,7 +18,20 @@ export default ({command, mode}) => {
         };
     });
     return defineConfig({
-        plugins: [vue(), resolveExternalsPlugin({
+        plugins: [vue(), styleImport({
+            libs: [{
+                libraryName: 'element-plus',
+                esModule: true,
+                ensureStyleFile: true,
+                resolveStyle: (name) => {
+                    name = name.slice(3)
+                    return `element-plus/packages/theme-chalk/src/${name}.scss`;
+                },
+                resolveComponent: (name) => {
+                    return `element-plus/lib/${name}`;
+                },
+            }]
+        }), resolveExternalsPlugin({
             echarts: 'echarts',
             axios: 'axios'
         })],
