@@ -17,16 +17,16 @@ class AjaxRequest {
     }
     setInterceptor(instance, url) {
         instance.interceptors.request.use(config => {
-            // if (Object.keys(this.queue).length === 0) {
-            //     // const hide = message.loading('Action in progress..', 0);
-            //     let loadingInstance = ElLoading.service({
-            //         lock: true,
-            //         text: 'Loading',
-            //         spinner: 'el-icon-loading',
-            //         background: 'rgba(0, 0, 0, 0.7)'
-            //     });
-            //     this.loading =loadingInstance
-            // }
+            if (Object.keys(this.queue).length === 0) {
+                // const hide = message.loading('Action in progress..', 0);
+                let loadingInstance = ElLoading.service({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                this.loading =loadingInstance
+            }
             if (!/^application\/json/gi.test(config.headers['Content-Type']) && config.data && Object.prototype.toString.call(config.data).toLowerCase() !== '[object formdata]') {
                 config.data = qs.stringify({
                     ...config.data
@@ -39,11 +39,11 @@ class AjaxRequest {
         // noinspection JSCheckFunctionSignatures
         instance.interceptors.response.use(
             response => {
-                // this.deleteQueue(url);
+                this.deleteQueue(url);
                 const status = response.status
                 const res = response.data
                 if (status == 200 || status == 201 || status == 204) {
-                    return response.data
+                    return response.data.data
                 } else {
                     return Promise.reject(res)
                 }

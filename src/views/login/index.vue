@@ -111,12 +111,55 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           // this.loading = true;
+          /**
+           * deptId: 1
+           deptName: "江北新区应急管理局"
+           deptShowCode: "320119"
+           dsLastLoginTime: "2021-04-29 14:03:12"
+           dsLoginNum: 208
+           extendFirst: null
+           extendSecond: null
+           extendThird: null
+           idCardNum: null
+           officePhone: null
+           ogsLastLoginTime: "2020-09-07 15:23:39.0"
+           ogsLoginNum: 28
+           pDeptId: 0
+           pdeptId: 0
+           remark: null
+           roleId: 1
+           roleName: "超级管理"
+           takeDate: null
+           token: "a8a5bf27b09f6018e2029764207c6b62b99612d1283bbce8d97a8705e6d1abffe27b3de04573a723388473198d95b877913be75d18deb03ff8f214a36ed8cb52"
+           updateTime: null
+           updateUser: null
+           userAreaId: "138"
+           userCode: "admin"
+           userFox: null
+           userId: 1
+           userKey: "a8a5bf27b09f6018e2029764207c6b62b99612d1283bbce8d97a8705e6d1abffe27b3de04573a723388473198d95b877913be75d18deb03ff8f214a36ed8cb52"
+           userName: "管理员"
+           userPhone: null
+           userSex: null
+           userState: "normal"
+           */
           login(
               this.loginForm.userCode, this.loginForm.userPassword
           ).then(res => {
-            console.log(res, 'ddddd')
+                cookie("set", "usercode", res.userCode, 1);
+                cookie("set", "username", res.userName, 1);
+                cookie("set", "deptname", res.deptName, 1);
+                cookie("set", "token", res.token, 0.5);
+                console.log(cookie("get", "token"));
+                this.$router.replace("/");
           }).catch (res => {
             console.log(res)
+                this.loading = false;
+                this.$message({
+                  message: `${res.resMsg || "操作失败"}`,
+                  type: "error"
+                });
+                console.warn(res);
           })
           // 验证账号密码
           // this["user/login"]({
