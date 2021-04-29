@@ -23,7 +23,7 @@ export default ({command, mode}) => {
         }), resolveExternalsPlugin({
             echarts: 'echarts',
             axios: 'axios',
-            md5 : 'js-md5',
+            md5 : 'md5',
         })],
         base: "./",
         server: {

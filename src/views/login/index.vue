@@ -6,44 +6,44 @@
     <el-row :gutter="40">
       <el-col :offset="6" :span="12">
         <el-form
-          ref="loginForm"
-          :model="loginForm"
-          :rules="loginRules"
-          class="login-form"
-          label-position="left"
+            ref="loginForm"
+            :model="loginForm"
+            :rules="loginRules"
+            class="login-form"
+            label-position="left"
         >
           <el-form-item prop="userCode">
             <!-- 修改自动填充 -->
-            <el-input type="text" style="position:fixed;bottom:-9999px" />
+            <el-input type="text" style="position:fixed;bottom:-9999px"/>
             <el-input
-              v-model="loginForm.userCode"
-              name="userCode"
-              type="text"
-              autocomplete="on"
-              placeholder="请输入账号"
-              clearable
+                v-model="loginForm.userCode"
+                name="userCode"
+                type="text"
+                autocomplete="on"
+                placeholder="请输入账号"
+                clearable
             >
               <template #prepend>账号</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="userPassword">
             <el-input
-              v-model="loginForm.userPassword"
-              :type="pwdType"
-              name="userPassword"
-              autocomplete="on"
-              placeholder="请输入密码"
-              clearable
+                v-model="loginForm.userPassword"
+                :type="pwdType"
+                name="userPassword"
+                autocomplete="on"
+                placeholder="请输入密码"
+                clearable
             >
               <template #prepend>密码</template>
             </el-input>
           </el-form-item>
           <el-form-item>
             <el-button
-              :loading="loading"
-              type="primary"
-              style="width:254px;"
-              @click.prevent="handleLogin"
+                :loading="loading"
+                type="primary"
+                style="width:254px;"
+                @click="handleLogin"
             >
               登 录
             </el-button>
@@ -55,9 +55,10 @@
 </template>
 
 <script>
-import { cookie } from "@/utils/common";
-import { mapActions } from "vuex";
+import {cookie} from "@/utils/common";
+import {mapActions} from "vuex";
 import {login} from "../../api/login";
+
 export default {
   name: "Login",
   data() {
@@ -88,10 +89,10 @@ export default {
       // 登陆表单验证
       loginRules: {
         userCode: [
-          { required: true, trigger: "blur", validator: validateUsername }
+          {required: true, trigger: "blur", validator: validateUsername}
         ],
         userPassword: [
-          { required: true, trigger: "blur", validator: validatePass }
+          {required: true, trigger: "blur", validator: validatePass}
         ]
       },
       loading: false,
@@ -106,14 +107,16 @@ export default {
   },
   methods: {
     // 登录
- async   handleLogin() {
+    async handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          login({
-            userCode:this.loginForm.userCode, userPassword:this.loginForm.userPassword
-          }).then(res=>{
-            console.log(res,'ddddd')
+          // this.loading = true;
+          login(
+              this.loginForm.userCode, this.loginForm.userPassword
+          ).then(res => {
+            console.log(res, 'ddddd')
+          }).catch (res => {
+            console.log(res)
           })
           // 验证账号密码
           // this["user/login"]({
@@ -177,6 +180,7 @@ $light_gray: #eee;
   left: 0;
 
   background: url("./../../assets/page/login.avif") no-repeat center center;
+
   .login-form {
     // width: 520px;
     position: relative;
@@ -186,21 +190,27 @@ $light_gray: #eee;
     box-sizing: border-box;
     padding: 43px 49px;
     margin: 44px auto 130px;
+
     :deep(.el-form-item__error) {
       padding-left: 87px;
     }
+
     // background: rgba(3, 98, 162, 0.2);
     background: rgba(4, 96, 170, 0.4);
     border-radius: 10px;
-      :deep(.el-input__inner) {
-        font-size: 16px!important;
-      }
+
+    :deep(.el-input__inner) {
+      font-size: 16px !important;
+    }
+
     :deep(.el-button) {
-      font-size: 16px!important;
+      font-size: 16px !important;
     }
-    :deep(.el-input-group__prepend){
-      font-size: 16px!important;
+
+    :deep(.el-input-group__prepend) {
+      font-size: 16px !important;
     }
+
     // transform: scale(1.3);
     //.el-form-item {
     //  margin-bottom: 52px;
@@ -283,20 +293,24 @@ $light_gray: #eee;
     //  background: url("../../assets/page/sprite4.png") no-repeat -285px -219px;
     //}
   }
+
   .tips {
     font-size: 14px;
     color: #fff;
     margin-bottom: 10px;
+
     span {
       &:first-of-type {
         margin-right: 16px;
       }
     }
   }
+
   .left-img {
     width: 100%;
     height: auto;
   }
+
   .svg-container {
     padding: 6px 5px 6px 15px;
     color: $dark_gray;
@@ -304,6 +318,7 @@ $light_gray: #eee;
     width: 30px;
     display: inline-block;
   }
+
   .title {
     width: 1200px;
     height: 110px;
@@ -317,6 +332,7 @@ $light_gray: #eee;
     // background: url("./../../assets/page/top.png") no-repeat center center;
     background-size: 1200px 100%;
   }
+
   .show-pwd {
     position: absolute;
     right: 10px;

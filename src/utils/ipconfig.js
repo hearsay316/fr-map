@@ -1,15 +1,12 @@
 const urlData = {
   production: {
-    api: "https://www.huaitaos.com/prod",
-    sso: "https://www.huaitaos.com/prod-login"
+    api: "http://47.103.1.161/huaita"
   },
   staging: {
-    api: "http://47.103.125.18/stage",
-    sso: "http://47.103.125.18/stage-login"
+    api: "http://47.103.1.161/huaita"
   },
   development: {
-    api: "http://47.103.125.18/stage",
-    sso: "http://47.103.125.18/stage-login"
+    api: "http://47.103.1.161/huaita"
   }
 };
 export default (type)=>urlData[type];

@@ -1,4 +1,6 @@
 import {api} from '@/utils/request'
+
+console.log(api)
 // const api = {
 //     login:{
 //         method: 'post',
@@ -21,7 +23,6 @@ import {api} from '@/utils/request'
 //     return pre;
 // },{})
 
-import md5 from 'js-md5'
 /**
  * @description 登录
  * @author 张立群
@@ -32,17 +33,20 @@ import md5 from 'js-md5'
  * @returns
  */
 export function login(userCode, userPassword) {
-    return api({
-        url: '/user/login',
+    console.log(userCode, userPassword,'userCode, userPassword')
+    return api.request({
+        url: '/api/user/login',
         method: 'post',
         data: {
             userCode,
-            userKey: md5(userPassword)
+            userKey: window.md5(userPassword)
         },
         headers: {
             'Content-Type': 'application/json'
         }
     })
+
+
 }
 
 
