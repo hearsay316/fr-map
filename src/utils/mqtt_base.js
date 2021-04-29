@@ -18,5 +18,5 @@ const mqttData = {
     url: "ws://58.213.48.218:12080/ws-stage/"
   }
 };
-export default mqttData[process.env.VUE_APP_ENV];
+export default mqttData[import.meta.env.VITE_NODE_ENV];
 
