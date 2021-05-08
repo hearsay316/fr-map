@@ -4,7 +4,7 @@ const routes = [
   {
     path: "/",
     name: "Index",
-    component: () => import("../views/Home.vue"),
+    component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
     meta: {
       title: ""
     }
@@ -12,7 +12,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/login/index.vue"),
+    component: () => import( /* webpackChunkName: "login" */"../views/login/index.vue"),
     meta: {
       title: "登陆"
     }

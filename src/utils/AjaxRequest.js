@@ -28,9 +28,7 @@ class AjaxRequest {
                 this.loading =loadingInstance
             }
             if (!/^application\/json/gi.test(config.headers['Content-Type']) && config.data && Object.prototype.toString.call(config.data).toLowerCase() !== '[object formdata]') {
-                config.data = qs.stringify({
-                    ...config.data
-                })
+                config.data = qs.stringify(config.data)
             }
             this.queue[url] = url;
             return config;

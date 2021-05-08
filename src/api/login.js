@@ -1,4 +1,4 @@
-import {api} from '@/utils/request'
+import {api} from '../utils/request'
 
 console.log(api)
 // const api = {
@@ -26,14 +26,13 @@ console.log(api)
 /**
  * @description 登录
  * @author 张立群
- * @date 2020-05-07
+ * @date 2021-05-07
  * @export
  * @param {*} userCode
  * @param {*} userPassword
  * @returns
  */
 export function login(userCode, userPassword) {
-    console.log(userCode, userPassword,'userCode, userPassword')
     return api.request({
         url: '/api/user/login',
         method: 'post',

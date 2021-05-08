@@ -1,14 +1,15 @@
 
 import router from './index'
-import { cookie } from '@/utils/common'
+import { cookie } from '../utils/common'
 const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
   // /* 路由发生变化修改页面title */
   // if (to.meta.title) {
   //   document.title = `南京市应急指挥调度综合平台 | ${to.meta.title}`
   // }
+  const isCookie =  cookie('get', 'token')
   // 判断登陆逻辑
-  if (cookie('get', 'token')) {
+  if (isCookie) {
     if (to.path === '/login') {
       next('/')
     } else {
