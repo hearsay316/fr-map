@@ -1,5 +1,8 @@
 <template>
-efasdfderd
+<div class="home-container">
+  <div class="left-container"></div>
+  <div  class="right-container"></div>
+</div>
 </template>
 
 <script>
@@ -9,5 +12,13 @@ export default {
 </script>
 
 <style scoped>
-
+.home-container{
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+.left-container{
+  background: red;
+}
 </style>
