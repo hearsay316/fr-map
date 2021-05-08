@@ -34,7 +34,7 @@ console.log(api)
  */
 export function login(userCode, userPassword) {
     return api.request({
-        url: '/api/user/login',
+        url: '/user/login',
         method: 'post',
         data: {
             userCode,
@@ -44,8 +44,13 @@ export function login(userCode, userPassword) {
             'Content-Type': 'application/json'
         }
     })
-
-
 }
 
-
+// 天气查询
+export function queryWeather(params) {
+    return api.request({
+        url: "/api-ds/tool/queryWeather",
+        method: "GET",
+        params: params
+    });
+}

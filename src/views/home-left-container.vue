@@ -27,6 +27,7 @@
 
 <script>
 import {parseTime} from "../utils/common";
+import {queryWeather} from "../api/login";
 
 export default {
   name: "home-left-container",
@@ -46,16 +47,17 @@ export default {
       }, 1000);
     },
     getQueryWeather() {
-      // queryWeather({
-      //   cityName: "南京"
-      // }).then(res => {
-      //   console.log(res);
-      //   this.weather = res;
-      // });
+      queryWeather({
+        cityName: "南京"
+      }).then(res => {
+        console.log(res);
+        this.weather = res;
+      });
     },
   },
   created() {
     this.getTime()
+    this.getQueryWeather()
   }
 }
 </script>

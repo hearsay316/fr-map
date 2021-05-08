@@ -1,22 +1,29 @@
 import qs from 'qs'
-import { ElLoading } from 'element-plus';
+import {ElLoading} from 'element-plus';
+import {cookie} from "./common";
+
 class AjaxRequest {
     constructor({baseUrl, timeout}) {
+
         this.baseURL = baseUrl;
         this.timeout = timeout || 3000;
         this.queue = {};
     }
+
     merge(options) {
-        return {...options, baseURL: this.baseURL, timeout: this.timeout};
+        return {...options, url: this.baseURL + options.url, timeout: this.timeout};
     }
+
     deleteQueue(url) {
         delete this.queue[url];
         if (Object.keys(this.queue).length === 0) {
             this.loading ? this.loading.close() : void 0;
         }
     }
+
     setInterceptor(instance, url) {
         instance.interceptors.request.use(config => {
+
             if (Object.keys(this.queue).length === 0) {
                 // const hide = message.loading('Action in progress..', 0);
                 let loadingInstance = ElLoading.service({
@@ -25,12 +32,15 @@ class AjaxRequest {
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
-                this.loading =loadingInstance
+                this.loading = loadingInstance
             }
             if (!/^application\/json/gi.test(config.headers['Content-Type']) && config.data && Object.prototype.toString.call(config.data).toLowerCase() !== '[object formdata]') {
                 config.data = qs.stringify(config.data)
             }
             this.queue[url] = url;
+            if (cookie("get", "token")) {
+                config.headers["Authorization"] = cookie("get", "token");
+            }
             return config;
         });
         // 响应拦截
@@ -60,4 +70,5 @@ class AjaxRequest {
         return instance(config);
     }
 }
+
 export default AjaxRequest
