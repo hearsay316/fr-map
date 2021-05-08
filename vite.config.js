@@ -37,7 +37,12 @@ export default ({command, mode}) => {
                 },
             ],
         },
-
-
+        css:{
+            preprocessorOptions: {
+                scss: {
+                    additionalData: '@import "./src/assets/base.scss";'
+                }
+            }
+        }
     })
 }

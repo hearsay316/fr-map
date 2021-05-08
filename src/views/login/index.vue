@@ -38,7 +38,7 @@
               <template #prepend>密码</template>
             </el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="index-login">
             <el-button
                 :loading="loading"
                 type="primary"
@@ -161,27 +161,6 @@ export default {
                 });
                 console.warn(res);
           })
-          // 验证账号密码
-          // this["user/login"]({
-          //   userCode: this.loginForm.userCode,
-          //   userPassword: this.loginForm.userPassword
-          // })
-          //   .then(res => {
-          //     cookie("set", "usercode", res.userCode, 1);
-          //     cookie("set", "username", res.userName, 1);
-          //     cookie("set", "deptname", res.deptName, 1);
-          //     cookie("set", "token", res.userPassword, 0.5);
-          //     console.log(cookie("get", "token"));
-          //     this.$router.replace("/");
-          //   })
-          //   .catch(res => {
-          //     this.loading = false;
-          //     this.$message({
-          //       message: `${res.resMsg || "操作失败"}`,
-          //       type: "error"
-          //     });
-          //     console.warn(res);
-          //   });
         } else {
           console.log("error submit!!");
           return false;
@@ -385,5 +364,9 @@ $light_gray: #eee;
     cursor: pointer;
     user-select: none;
   }
+}
+.index-login{
+  display: flex;
+  justify-content: center;
 }
 </style>
