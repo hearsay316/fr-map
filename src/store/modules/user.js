@@ -1,9 +1,9 @@
 
-import { login } from "@/api/sso";
+import { login } from "../../api/login.js";
 
 const state = {
   userCode: "nanjinghuaita",
-  user: {}
+  user: null
 };
 
 const mutations = {

@@ -146,6 +146,7 @@ export default {
           login(
               this.loginForm.userCode, this.loginForm.userPassword
           ).then(res => {
+                this.$store.commit('/setUser',res)
                 cookie("set", "usercode", res.userCode, 1);
                 cookie("set", "username", res.userName, 1);
                 cookie("set", "deptname", res.deptName, 1);

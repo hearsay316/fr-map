@@ -28,7 +28,7 @@
 <script>
 import {parseTime} from "../utils/common";
 import {queryWeather} from "../api/login";
-
+import {mapMutations} from "vuex"
 export default {
   name: "home-left-container",
   data() {
@@ -54,6 +54,9 @@ export default {
         this.weather = res;
       });
     },
+  },
+  computed:{
+    ...mapMutations([''])
   },
   created() {
     this.getTime()
