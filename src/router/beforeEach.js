@@ -34,6 +34,6 @@ router.afterEach((to) => {
     if (to.meta.title) {
         document.title = `消防救援现场协同指挥系统 | ${to.meta.title}`;
     } else {
-        document.title = '消防救援现场协同指挥系统 ';
+        document.title = '消防救援现场协同指挥系统';
     }
 });
