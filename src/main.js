@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import "./router/beforeEach";
-import router from "./router";
-import store from "./store";
+import { createApp } from 'vue';
+import App from './App.vue';
+import './router/beforeEach';
+import router from './router';
+import store from './store/index';
 import {
     ElAlert,
     ElAside,
@@ -86,11 +86,11 @@ import {
     ElLoading,
     ElMessage,
     ElMessageBox,
-    ElNotification,
+    ElNotification
 } from 'element-plus';
-import $http from './utils/request'
+import $http from './utils/request';
 
-console.log($http,'$http$http')
+console.log($http, '$http$http');
 const components = [
     ElAlert,
     ElAside,
@@ -169,21 +169,15 @@ const components = [
     ElTooltip,
     ElTransfer,
     ElTree,
-    ElUpload,
-]
-const plugins = [
-    ElInfiniteScroll,
-    ElLoading,
-    ElMessage,
-    ElMessageBox,
-    ElNotification,
-]
+    ElUpload
+];
+const plugins = [ElInfiniteScroll, ElLoading, ElMessage, ElMessageBox, ElNotification];
 
-const app = createApp(App)
-components.forEach(component => {
-    app.component(component.name, component)
-})
-plugins.forEach(plugin => {
-    app.use(plugin)
-})
-app.use(router).use(store).mount('#app')
+const app = createApp(App);
+components.forEach((component) => {
+    app.component(component.name, component);
+});
+plugins.forEach((plugin) => {
+    app.use(plugin);
+});
+app.use(store).use(router).mount('#app');

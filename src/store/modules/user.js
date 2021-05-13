@@ -1,41 +1,40 @@
-
-import { login } from "../../api/login.js";
+import { login } from '../../api/login.js';
 
 const state = {
-  userCode: "nanjinghuaita",
-  user: null
+    userCode: 'nanjinghuaita',
+    userData: null
 };
 
 const mutations = {
-  setUser(state, data) {
-    state.user = data;
-  }
+    setUser(state, data) {
+        state.userData = data;
+    }
 };
 
 const actions = {
-  // 假登陆
-  login({ state }, { userCode, userPassword }) {
-    console.log(state);
-    return new Promise((resolve, reject) => {
-      login({
-        userCode,
-        userPassword
-      })
-        .then(res => {
-          resolve(res);
-        })
-        .catch(err => {
-          reject(err);
+    // 假登陆
+    login({ state }, { userCode, userPassword }) {
+        console.log(state);
+        return new Promise((resolve, reject) => {
+            login({
+                userCode,
+                userPassword
+            })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
-    });
-  }
+    }
 };
 
 const user = {
-  namespaced: true,
-  state,
-  mutations,
-  actions
+    namespaced: true,
+    state,
+    mutations,
+    actions
 };
 
 export default user;

@@ -8,3 +8,23 @@ html,body{
 @function column-width($number) {
   @return (($number/3840) * 100)*1vw ;
 }
+.sun {
+
+  background: url('./../assets/page/sun.png') no-repeat ;
+}
+.cloudy{
+
+  background: url('./../assets/page/cloudy.png') no-repeat ;
+}
+.rain{
+
+  background: url('./../assets/page/rain.png') no-repeat ;
+}
+.snow{
+
+  background: url('./../assets/page/snow.png') no-repeat ;
+}
+.overcast{
+
+  background: url('./../assets/page/overcast.png') no-repeat ;
+}

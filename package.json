@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite ",
     "build": "vite build --mode staging",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint:eslint": "eslint --fix --ext \"src/**/*.{vue,less,css,scss}\""
   },
   "dependencies": {
     "element-plus": "^1.0.2-beta.41",
@@ -17,9 +18,17 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.1",
     "@vue/compiler-sfc": "^3.0.5",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.26.0",
+    "eslint-config-alloy": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "prettier": "^2.3.0",
     "sass": "^1.32.11",
     "vite": "^2.1.5",
     "vite-plugin-resolve-externals": "^0.1.0",
-    "vite-plugin-style-import": "^0.10.0"
+    "vite-plugin-style-import": "^0.10.0",
+    "vue-eslint-parser": "^7.6.0"
   }
 }
