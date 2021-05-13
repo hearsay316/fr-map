@@ -8,7 +8,7 @@
     "lint:eslint": "eslint --fix --ext \"src/**/*.{vue,less,css,scss}\""
   },
   "dependencies": {
-    "element-plus": "^1.0.2-beta.41",
+    "element-plus": "^1.0.2-beta.44",
     "js-cookie": "^2.2.1",
     "qs": "^6.10.1",
     "vue": "^3.0.5",
@@ -26,7 +26,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "prettier": "^2.3.0",
     "sass": "^1.32.11",
-    "vite": "^2.1.5",
+    "vite": "2.3.0",
     "vite-plugin-resolve-externals": "^0.1.0",
     "vite-plugin-style-import": "^0.10.0",
     "vue-eslint-parser": "^7.6.0"
