@@ -32,7 +32,7 @@ router.afterEach((to) => {
     console.log(to);
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
-        document.title = `消防救援现场协同指挥系统 | ${to.meta.title}`;
+        document.title = `消防救援现场协同指挥系统 |  ${to.meta.title}`;
     } else {
         document.title = '消防救援现场协同指挥系统';
     }
