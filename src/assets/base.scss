@@ -8,6 +8,9 @@ html,body{
 @function column-width($number) {
   @return (($number/3840) * 100)*1vw ;
 }
+div{
+  box-sizing: border-box;
+}
 .sun {
 
   background: url('./../assets/page/sun.png') no-repeat ;
