@@ -3,6 +3,7 @@ import App from './App.vue';
 import './router/beforeEach';
 import router from './router';
 import store from './store/index';
+
 import {
     ElAlert,
     ElAside,
@@ -86,11 +87,10 @@ import {
     ElLoading,
     ElMessage,
     ElMessageBox,
-    ElNotification
+    ElNotification,
+    locale
 } from 'element-plus';
-import $http from './utils/request';
 
-console.log($http, '$http$http');
 const components = [
     ElAlert,
     ElAside,
@@ -172,12 +172,16 @@ const components = [
     ElUpload
 ];
 const plugins = [ElInfiniteScroll, ElLoading, ElMessage, ElMessageBox, ElNotification];
-
+import lang from 'element-plus/lib/locale/lang/zh-cn';
+import 'dayjs/locale/zh-cn';
 const app = createApp(App);
+locale(lang);
 components.forEach((component) => {
     app.component(component.name, component);
 });
+
 plugins.forEach((plugin) => {
     app.use(plugin);
 });
+
 app.use(store).use(router).mount('#app');

@@ -3,22 +3,18 @@
         <home-left-container class="left-container"></home-left-container>
         <div class="right-container">
             <div class="right-container-main">
-                <div class="home-history"></div>
-                <div class="home-record"></div>
+                <homeHistory class="home-history"></homeHistory>
+                <homeRecord class="home-record"></homeRecord>
                 <div class="battle-list"></div>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script setup>
 import homeLeftContainer from './home-left-container.vue';
-export default {
-    name: 'Home',
-    components: {
-        homeLeftContainer
-    }
-};
+import homeHistory from './home-history.vue';
+import homeRecord from './home-record.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -35,14 +31,14 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #0d151b;
+    background: $backgroundcolor;
     //background: url("../assets/page/right.png");
 }
 .right-container-main {
     position: relative;
     width: column-width(3185);
     height: column-width(1935);
-    border: 2px solid red;
+    //border: 2px solid $bordercolor;
     overflow: hidden;
 }
 .battle-list {
@@ -52,17 +48,23 @@ export default {
     height: column-width(1935);
     top: 0;
     right: 0;
-    border: 2px solid red;
+    //border: 2px solid $bordercolor;
 }
 .home-history {
     width: column-width(1520);
     height: column-width(645);
-    border: 1px solid red;
+    border: 2px solid #3b4d5d;
+    border-radius: 5px;
     margin-bottom: column-width(70);
+    display: flex;
+    justify-content: center;
+    padding-top: column-width(45);
+    flex-wrap: wrap;
 }
 .home-record {
     width: column-width(1680);
     height: column-width(1220);
-    border: 1px solid red;
+    border: 2px solid $bordercolor;
+    border-radius: 5px;
 }
 </style>

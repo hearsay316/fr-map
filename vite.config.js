@@ -18,7 +18,7 @@ export default ({ command, mode }) => {
                         esModule: true,
                         ensureStyleFile: true,
                         resolveStyle: (name) => {
-                            name = name.slice(3);
+                            name = name && name.slice(3);
                             return `element-plus/packages/theme-chalk/src/${name}.scss`;
                         },
                         resolveComponent: (name) => {

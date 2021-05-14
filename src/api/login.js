@@ -1,6 +1,6 @@
-import {api} from '../utils/request'
+import { api } from '../utils/request';
 
-console.log(api)
+console.info(api, '请求的基本配置');
 // const api = {
 //     login:{
 //         method: 'post',
@@ -43,14 +43,14 @@ export function login(userCode, userPassword) {
         headers: {
             'Content-Type': 'application/json'
         }
-    })
+    });
 }
 
 // 天气查询
 export function queryWeather(params) {
     return api.request({
-        url: "/api-ds/tool/queryWeather",
-        method: "GET",
+        url: '/api-ds/tool/queryWeather',
+        method: 'GET',
         params: params
     });
 }

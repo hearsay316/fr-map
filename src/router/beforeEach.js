@@ -7,7 +7,6 @@ router.beforeEach((to, from, next) => {
     //   document.title = `南京市应急指挥调度综合平台 | ${to.meta.title}`
     // }
     const isCookie = cookie('get', 'token');
-    console.log(isCookie, 'isCookie');
     // 判断登陆逻辑
     if (isCookie) {
         if (to.path === '/login') {
