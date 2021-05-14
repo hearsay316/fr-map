@@ -19,8 +19,6 @@ router.beforeEach((to, from, next) => {
         clearAll();
         if (whiteList.indexOf(to.path) !== -1) {
             next();
-        } else if (to.path === '/huaita' && to.query.id && to.query.id === md5('423535')) {
-            next();
         } else {
             next('/login');
         }
@@ -28,7 +26,6 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-    console.log(to);
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
         document.title = `消防救援现场协同指挥系统 | ${to.meta.title}`;

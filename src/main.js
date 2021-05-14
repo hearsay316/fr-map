@@ -3,7 +3,8 @@ import App from './App.vue';
 import './router/beforeEach';
 import router from './router';
 import store from './store/index';
-
+import lang from 'element-plus/lib/locale/lang/zh-cn';
+import 'dayjs/locale/zh-cn';
 import {
     ElAlert,
     ElAside,
@@ -172,16 +173,24 @@ const components = [
     ElUpload
 ];
 const plugins = [ElInfiniteScroll, ElLoading, ElMessage, ElMessageBox, ElNotification];
-import lang from 'element-plus/lib/locale/lang/zh-cn';
-import 'dayjs/locale/zh-cn';
-const app = createApp(App);
-locale(lang);
-components.forEach((component) => {
-    app.component(component.name, component);
-});
-
-plugins.forEach((plugin) => {
-    app.use(plugin);
-});
-
-app.use(store).use(router).mount('#app');
+console.log('走到这个了 ');
+try {
+    const app = createApp(App);
+    console.log(locale, 'localelocale');
+    typeof locale === 'function' ? locale(lang) : locale.use(lang);
+    components.forEach((component) => {
+        app.component(component.name, component);
+    });
+    console.log('走到这个了 ');
+    plugins.forEach((plugin) => {
+        app.use(plugin);
+    });
+    console.log('走到这个了 ');
+    app.use(store).use(router).mount('#app');
+    console.log('走到这个了 ');
+} catch (e) {
+    console.log(
+        e,
+        'const app = createApp(App);\nconst app = createApp(App);\nconst app = createApp(App);\n'
+    );
+}
