@@ -72,6 +72,17 @@
             <el-table-column align="center" prop="name" label="姓名" width="180"> </el-table-column>
             <el-table-column align="center" prop="address" label="地址"> </el-table-column>
         </el-table>
+        <div class="foot-pagination">
+            <el-pagination
+                v-model:current-page="baseOptions.currentPage"
+                :page-size="baseOptions.pageSize"
+                layout="prev, pager, next"
+                :total="baseOptions.total"
+                @prev-click="baseOptions.currentPage--"
+                @next-click="baseOptions.currentPage++"
+                @current-change="currentChange"
+            ></el-pagination>
+        </div>
     </div>
 </template>
 
@@ -86,6 +97,13 @@ let form_data = reactive({
     type: [],
     resource: '',
     desc: ''
+});
+const baseOptions = reactive({
+    total: 78,
+    currentPage: 1,
+    pageSize: 10,
+    tableLoading: false,
+    tableData: []
 });
 let input3 = ref('');
 let select = ref('');
@@ -118,6 +136,7 @@ function tableRowClassName({ rowIndex }) {
     }
     return '';
 }
+function currentChange() {}
 </script>
 
 <style lang="scss" scoped>
