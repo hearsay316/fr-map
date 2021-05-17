@@ -62,7 +62,18 @@
                 </el-row>
             </el-form>
         </header>
-        <div></div>
+        <div class="home-record-battle-list">
+            <div class="home-record-battle-type">
+                <div class="home-record-battle-type-A">
+                    <i class="el-icon-plus plus"></i>
+                    <div class="text-color">创建组</div>
+                </div>
+                <div class="home-record-battle-type-B">
+                    <i class="el-icon-plus plus"></i>
+                    <div class="text-color">管理</div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -81,4 +92,36 @@ let form_data = reactive({
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.home-record-battle-list {
+    .home-record-battle-type-A {
+        width: column-width(160);
+        height: column-width(200);
+        border: 2px solid $primaryborde;
+        border-radius: 15px;
+        margin-bottom: column-width(90);
+        box-shadow: 0 0 column-width(50) $primaryborde inset;
+    }
+    .home-record-battle-type-B {
+        width: column-width(160);
+        height: column-width(200);
+        border: 2px solid $warningborde;
+        border-radius: 15px;
+        margin-bottom: column-width(90);
+        box-shadow: 0 0 column-width(50) $warningborde inset;
+    }
+    .text-color {
+        color: $white;
+        text-align: center;
+    }
+    .plus {
+        margin-top: 8px;
+        display: block;
+        text-align: center;
+        width: 100%;
+        font-weight: 600;
+        color: $white;
+        font-size: 42px;
+    }
+}
+</style>
