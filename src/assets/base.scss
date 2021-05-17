@@ -124,9 +124,13 @@ $titlecolor:#62a2cd;
     color: $titlecolor;
     background:$backgroundcolor2;
     font-size: 20px;
+    font-weight: 400;
     tr{
       color: $titlecolor;
       background:$backgroundcolor2;
+    }
+    th{
+      font-weight: 400;
     }
   }
   tr{
