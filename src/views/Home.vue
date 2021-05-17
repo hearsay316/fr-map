@@ -5,7 +5,7 @@
             <div class="right-container-main">
                 <homeHistory class="home-history"></homeHistory>
                 <homeRecord class="home-record"></homeRecord>
-                <div class="battle-list"></div>
+                <HomeBattleList class="home-battle-list"></HomeBattleList>
             </div>
         </div>
     </div>
@@ -15,6 +15,7 @@
 import homeLeftContainer from './home-left-container.vue';
 import homeHistory from './home-history.vue';
 import homeRecord from './home-record.vue';
+import HomeBattleList from './home-battle-list.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -41,7 +42,7 @@ import homeRecord from './home-record.vue';
     //border: 2px solid $bordercolor;
     overflow: hidden;
 }
-.battle-list {
+.home-battle-list {
     //1590-1935
     position: absolute;
     width: column-width(1590);

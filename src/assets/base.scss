@@ -52,6 +52,8 @@ $white:#ffffff;
 $backgroundcolor2:#16232d;
 $titlecolor:#62a2cd;
 $paginationColor :#68859f;
+$primaryborde:#6eb3e2;
+$warningborde:#d2d72e;
 .el-range-editor.el-input__inner.fr-date-picker {
   background: $backgroundcolor;
   border: 1px solid $bordercolor;
@@ -90,6 +92,33 @@ $paginationColor :#68859f;
 }
 .set-h-42{
   height: 42px;
+}
+.fr-input.fr-input-warning{
+  position: relative;
+  border: 2px solid $warningborde;
+  box-shadow: 0 0 column-width(50) $warningborde inset;
+  z-index: 2;
+  .el-input__inner{
+    color: $white;
+    background: none;
+    border: 1px solid transparent;
+  }
+  .el-input-group__append{
+    background: none;
+  }
+}
+.fr-input.fr-input-primary{
+  border: 2px solid $primaryborde;
+  box-shadow: 0 0 column-width(50) $primaryborde inset;
+  .el-input__inner{
+    color: $white;
+    background: none;
+  }
+  .el-icon-primary{
+    color: $primaryborde;
+    font-size: 24px;
+  }
+
 }
 .fr-input {
   border: 1px solid $bordercolor;

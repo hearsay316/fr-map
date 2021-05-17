@@ -11,9 +11,9 @@
                                     type="date"
                                     placeholder="开始时间"
                                     style="width: 100%"
-                                    class="fr-input"
+                                    class="fr-input fr-input-primary"
                                     clearable
-                                    prefix-icon="el-icon-date el-icon-color"
+                                    prefix-icon="el-icon-date el-icon-primary"
                                 ></el-date-picker>
                             </el-col>
                             <el-col class="line" :span="2">-</el-col>
@@ -24,7 +24,7 @@
                                     placeholder="结束时间"
                                     style="width: 100%"
                                     prefix-icon="el-icon"
-                                    class="fr-input"
+                                    class="fr-input fr-input-primary"
                                     clearable
                                 ></el-date-picker>
                             </el-col>
@@ -35,14 +35,14 @@
                             <el-input
                                 v-model="form_data.name"
                                 placeholder="请输入内容"
-                                class="fr-input set-h-42"
+                                class="fr-input fr-input-warning set-h-42"
                                 clearable
                             >
                                 <template #append>
                                     <div class="input-with-select-append">
                                         <div>
                                             <el-select
-                                                v-model="select"
+                                                v-model="form_data.select"
                                                 clearable
                                                 placeholder="状态"
                                             >
@@ -62,27 +62,6 @@
                 </el-row>
             </el-form>
         </header>
-        <el-table
-            class="fr-table"
-            :data="tableData"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-        >
-            <el-table-column align="center" prop="date" label="日期" width="180"> </el-table-column>
-            <el-table-column align="center" prop="name" label="姓名" width="180"> </el-table-column>
-            <el-table-column align="center" prop="address" label="地址"> </el-table-column>
-        </el-table>
-        <div class="foot-pagination">
-            <el-pagination
-                v-model:current-page="baseOptions.currentPage"
-                :page-size="baseOptions.pageSize"
-                layout="prev, pager, next"
-                :total="baseOptions.total"
-                @prev-click="baseOptions.currentPage--"
-                @next-click="baseOptions.currentPage++"
-                @current-change="currentChange"
-            ></el-pagination>
-        </div>
     </div>
 </template>
 
@@ -90,6 +69,7 @@
 import { ref, reactive } from 'vue';
 let form_data = reactive({
     name: '',
+    select: '',
     region: '',
     date1: '',
     date2: '',
@@ -98,65 +78,6 @@ let form_data = reactive({
     resource: '',
     desc: ''
 });
-const baseOptions = reactive({
-    total: 78,
-    currentPage: 1,
-    pageSize: 10,
-    tableLoading: false,
-    tableData: []
-});
-let input3 = ref('');
-let select = ref('');
-let form = ref(null);
-const tableData = reactive([
-    {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-    }
-]);
-function tableRowClassName({ rowIndex }) {
-    if (rowIndex % 2 === 1) {
-        return 'warning-row';
-    }
-    return '';
-}
-function currentChange() {}
 </script>
 
-<style lang="scss" scoped>
-.home-record-header {
-    width: column-width(1590);
-    margin: column-width(40) auto column-width(32) auto;
-}
-</style>
+<style scoped></style>
