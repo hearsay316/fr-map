@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { ElButton } from 'element-plus';
 import echarts from 'echarts';
 import { onMounted, ref } from 'vue';
 
@@ -14,7 +13,6 @@ const root = ref(null);
 
 // 基于准备好的dom，初始化echarts实例
 onMounted(() => {
-    console.log(echarts, 'ssfsff');
     const myChart = echarts.init(root?.value);
     // 绘制图表
     myChart.setOption({
@@ -62,9 +60,6 @@ onMounted(() => {
                     color: '#fff'
                 }
             }
-
-            // axisTick: { show: true },
-            // axisLine: { show: true }
         },
         series: [
             {
