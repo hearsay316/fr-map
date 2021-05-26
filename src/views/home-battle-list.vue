@@ -43,7 +43,7 @@
                                     <div class="input-with-select-append">
                                         <div>
                                             <el-select
-                                                v-model="form_data.select"
+                                                v-model="form_data.status"
                                                 clearable
                                                 placeholder="状态"
                                             >
@@ -56,7 +56,10 @@
                                             </el-select>
                                         </div>
                                         <div>
-                                            <el-button icon="el-icon-search"></el-button>
+                                            <el-button
+                                                icon="el-icon-search"
+                                                @click="currentChange"
+                                            ></el-button>
                                         </div>
                                     </div>
                                 </template>
@@ -89,7 +92,9 @@
                             <div class="center">
                                 <div class="center-bg" :class="tableData?.status"></div>
                             </div>
-                            <div :class="tableData?.status" class="right">执行中</div>
+                            <div :class="tableData?.status" class="right">
+                                {{ tableData?.status_str }}
+                            </div>
                         </div>
                         <div class="home-record-item-desc">
                             <h3>{{ tableData?.teamName }}</h3>
@@ -107,15 +112,15 @@
                 </div>
                 <div class="pagination">
                     <div class="pagination-currentPage m-r-42">
-                        第 <span>{{ baseOptions.currentPage }}</span> 页
+                        第 <span>{{ form_data.pageNumber }}</span> 页
                     </div>
                     <el-pagination
-                        v-model:current-page="baseOptions.currentPage"
-                        :page-size="baseOptions.pageSize"
+                        v-model:current-page="form_data.pageNumber"
+                        :page-size="form_data.pageSize"
                         layout="prev, pager, next"
                         :total="baseOptions.total"
-                        @prev-click="baseOptions.currentPage--"
-                        @next-click="baseOptions.currentPage++"
+                        @prev-click="form_data.pageNumber--"
+                        @next-click="form_data.pageNumber++"
                         @current-change="currentChange"
                     >
                     </el-pagination>
@@ -124,78 +129,54 @@
                         >条
                     </div>
                 </div>
-
-                <!--                <div class="home-record-item">-->
-                <!--                    <div class="home-record-item-header">-->
-                <!--                        <div class="left">2021-04-13</div>-->
-                <!--                        <div class="center"><div class="center-bg unfinished"></div></div>-->
-                <!--                        <div class="right unfinished">执行中</div>-->
-                <!--                    </div>-->
-                <!--                    <div class="home-record-item-desc">-->
-                <!--                        <h3>作战组</h3>-->
-                <!--                        <div class="desc">zheg shi miaoshi</div>-->
-                <!--                    </div>-->
-                <!--                    <div class="home-record-item-operation">-->
-                <!--                        <div class="home-record-item-operation-btn">作战记录</div>-->
-                <!--                        <div class="home-record-item-operation-btn">作战记录</div>-->
-                <!--                        <div class="home-record-item-operation-btn">作战记录</div>-->
-                <!--                        <div class="home-record-item-operation-btn">作战记录</div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--                <div class="home-record-item">{{ baseOptions?.tableData }}</div>-->
-                <!--                <div class="home-record-item">xsds</div>-->
-                <!--                <div class="home-record-item">xsds</div>-->
-                <!--                <div class="home-record-item">{{ listDic_values }}swdw</div>-->
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed, toRefs } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import { sevenDays } from '../utils/common';
 import { combatTeam_pageList } from '../api/page_list';
-import { tableList } from './table-list';
+import { object_remove_null, tableList } from './table-list';
+import dayjs from 'dayjs';
 let form_data = reactive({
     pageNumber: 1,
     pageSize: 6,
-    endTime: sevenDays(new Date(), '{y}-{m}-{d}')[1],
-    keyText: '',
-    startTime: sevenDays(new Date(), '{y}-{m}-{d}')[0],
+    endTime: sevenDays(new Date())[1],
+    startTime: sevenDays(new Date())[0],
     status: ''
 });
+let form_data_f = computed(() => {
+    form_data.endTime = form_data.endTime && dayjs(form_data.endTime).format('YYYY-MM-DD HH:mm:ss');
+    form_data.startTime =
+        form_data.startTime && dayjs(form_data.startTime).format('YYYY-MM-DD HH:mm:ss');
+    return object_remove_null(form_data);
+});
 let baseOptions = ref({
-    total: undefined,
-    currentPage: 1,
-    pageSize: 6,
-    tableLoading: false,
-    tableData: []
+    tableData: [],
+    total: 0
 });
 
 const store = useStore();
 let listDic_values = computed(() => store.state.user.listDic_values);
-tableList(combatTeam_pageList, {
-    pageNumber: baseOptions.value.currentPage,
-    pageSize: baseOptions.value.pageSize
-}).then((res) => {
-    baseOptions.value = res;
-    console.log(baseOptions, 'baseOptionsbaseOptions');
-});
+
 function currentChange() {
-    tableList(combatTeam_pageList, {
-        pageNumber: baseOptions.value.currentPage,
-        pageSize: baseOptions.value.pageSize
-    }).then((res) => {
+    tableList(combatTeam_pageList, form_data_f.value, [
+        {
+            data: listDic_values,
+            data_type: 'dicValueCode',
+            data_value: 'dicValueText',
+            type: 'status',
+            newType: 'status_str'
+        }
+    ]).then((res) => {
         baseOptions.value = res;
-        console.log(baseOptions, 'baseOptionsbaseOptions');
     });
 }
 onMounted((form_data) => {
-    console.log(form_data, store.state.user.listDic_values, 'listDic_valueslistDic_values');
-    // getlist();
-    // combatTeam_pageList();
-    // combatTeam_pageList()
+    currentChange();
 });
 </script>
 
