@@ -51,7 +51,6 @@ class AjaxRequest {
                 this.deleteQueue(url);
                 const status = response.status;
                 const res = response.data;
-                console.log(status, res, 'res', res.resCode == 80001);
                 if (status == 200 || status == 201 || status == 204) {
                     if (res.resCode == 80001) {
                         // 登录到期

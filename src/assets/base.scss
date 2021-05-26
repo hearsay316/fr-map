@@ -47,6 +47,7 @@ $myColor: red;
 $myFontSize: 18px;
 $myWidth: 680px;
 $bordercolor: #3b4d5d;
+$bordercolor_10 :rgba(59, 77, 93,.1);
 $backgroundcolor: #0d151b;
 $white:#ffffff;
 $textColor:#666666;
@@ -289,5 +290,38 @@ $warningborde:#d2d72e;
   width: 100%;
   .el-form-item__content {
     width: 100%;
+  }
+}
+.fr-pop-form-item{
+  .el-form-item__label{
+    color: $white;
+  }
+  .el-input__inner{
+    border: 1px solid $bordercolor;
+    color: $white;
+    background-color: $bordercolor_10;
+  }
+  .el-textarea__inner{
+    border: 1px solid $bordercolor;
+    color: $white;
+    background-color: $bordercolor_10;
+  }
+}
+.fr-el-tree{
+  &.el-tree{
+    background-color: $bordercolor_10;
+    color: $white;
+  }
+  .el-tree-node__content:hover {
+    background-color: $bordercolor;
+  }
+  .el-checkbox__inner{
+    border-radius: 50%;
+  }
+  .el-tree-node:focus {
+    /* background: red; */
+    -webkit-text-fill-color: $bordercolor;
+    /* box-shadow: 0 0 0 1000px #0d151b inset; */
+    /* -webkit-text-fill-color: #fff; */
   }
 }

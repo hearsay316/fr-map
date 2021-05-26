@@ -131,6 +131,7 @@
                 </div>
             </div>
         </div>
+        <HomeRecordPopAdd class="home-record-pop-add"></HomeRecordPopAdd>
     </div>
 </template>
 
@@ -140,6 +141,7 @@ import { useStore } from 'vuex';
 import { sevenDays } from '../utils/common';
 import { combatTeam_pageList } from '../api/page_list';
 import { object_remove_null, tableList } from './table-list';
+import HomeRecordPopAdd from './home-record-pop-add.vue';
 import dayjs from 'dayjs';
 let form_data = reactive({
     pageNumber: 1,
@@ -328,5 +330,14 @@ onMounted((form_data) => {
         color: $white;
         font-size: 42px;
     }
+}
+.home-record-pop-add {
+    position: absolute;
+    right: 0;
+    top: 68px;
+    width: column-width(1595);
+    height: column-width(1590);
+    background-size: 100% 100%;
+    background-image: url('../assets/page/home-create.png');
 }
 </style>

@@ -27,7 +27,6 @@ export function tableList(get_list_fn, data, type_arrs) {
 }
 
 export function object_remove_null(objet) {
-    console.log(objet, '_value_value');
     let new_object = {};
     for (let key in objet) {
         if (objet[key]) {

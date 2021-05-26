@@ -173,7 +173,6 @@ const components = [
     ElUpload
 ];
 const plugins = [ElInfiniteScroll, ElLoading, ElMessage, ElMessageBox, ElNotification];
-console.log('走到这个了 ');
 try {
     const app = createApp(App);
     console.log(locale, 'localelocale');
@@ -181,13 +180,10 @@ try {
     components.forEach((component) => {
         app.component(component.name, component);
     });
-    console.log('走到这个了 ');
     plugins.forEach((plugin) => {
         app.use(plugin);
     });
-    console.log('走到这个了 ');
     app.use(store).use(router).mount('#app');
-    console.log('走到这个了 ');
 } catch (e) {
     console.log(
         e,
