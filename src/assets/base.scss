@@ -49,9 +49,10 @@ $myWidth: 680px;
 $bordercolor: #3b4d5d;
 $backgroundcolor: #0d151b;
 $white:#ffffff;
+$textColor:#666666;
+$paginationColor:#68859f;
 $backgroundcolor2:#16232d;
 $titlecolor:#62a2cd;
-$paginationColor :#68859f;
 $primaryborde:#6eb3e2;
 $warningborde:#d2d72e;
 .el-range-editor.el-input__inner.fr-date-picker {
@@ -190,29 +191,45 @@ $warningborde:#d2d72e;
 .el-table .success-row {
   background: #f0f9eb;
 }
-
+.m-r-42{
+  margin-right: column-width(42);
+}
+.m-l-42{
+  margin-left: column-width(42);
+}
 .pagination{
-  padding: 15px 0 15px 20px;
+  margin-top: column-width(70);
+  //padding: 15px 0 15px 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  .pagination-currentPage{
+    color: $textColor;
+    line-height: 30px;
+    span{
+      color: $white;
+    }
+  }
 }
 .pagination .el-pager li{
   background-color:#111111;
-  color: #999999;
+  color: $paginationColor;
 }
 .pagination .el-pagination .btn-prev{
   background-color:#111111;
   border-bottom-left-radius: 45%;
   border-top-left-radius: 45%;
-  border-top: 1px solid #004559;
-  border-bottom: 1px solid #004559;
-  border-left: 1px solid #004559;
+  border-top: 1px solid $paginationColor;
+  border-bottom: 1px solid $paginationColor;
+  border-left: 1px solid $paginationColor;
 }
 .pagination .el-pagination .btn-next{
   background-color:#111111;
   border-top-right-radius: 45%;
   border-bottom-right-radius: 45%;
-  border-top: 1px solid #004559;
-  border-bottom: 1px solid #004559;
-  border-right: 1px solid #004559;
+  border-top: 1px solid $paginationColor;
+  border-bottom: 1px solid $paginationColor;
+  border-right: 1px solid $paginationColor;
 }
 .pagination .el-pagination .btn-next .el-icon,.pagination .el-pagination .btn-prev .el-icon {
   width: 16px;
@@ -231,20 +248,24 @@ $warningborde:#d2d72e;
   z-index: 3;
 }
 .pagination .el-pager li {
-  border-top: 1px solid #004559;
-  border-bottom: 1px solid #004559;
+  border-top: 1px solid $paginationColor;
+  border-bottom: 1px solid $paginationColor;
 }
 .pagination .el-pagination .el-pager li.active:after,.pagination .el-pagination .el-pager li:hover:after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 80%;
   height: 100%;
   z-index: -1;
   background-color: #111111;
-  border: 2px solid #004559;
-  box-shadow: inset 0 0 10px rgb(7 163 253 / 20%);
+  border: 2px solid $primaryborde;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px $primaryborde;
   transform: scaleY(1.4);
   box-sizing: border-box;
 }
@@ -262,5 +283,11 @@ $warningborde:#d2d72e;
   }
   .active.number{
     color: $white;
+  }
+}
+.fr-form-item {
+  width: 100%;
+  .el-form-item__content {
+    width: 100%;
   }
 }

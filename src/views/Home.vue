@@ -16,6 +16,9 @@ import homeLeftContainer from './home-left-container.vue';
 import homeHistory from './home-history.vue';
 import homeRecord from './home-record.vue';
 import HomeBattleList from './home-battle-list.vue';
+import { useStore } from 'vuex';
+let store = useStore();
+store.dispatch('user/get_listDic_values');
 </script>
 
 <style lang="scss" scoped>

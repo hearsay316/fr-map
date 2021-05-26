@@ -54,3 +54,19 @@ export function queryWeather(params) {
         params: params
     });
 }
+
+export function listDic_values(params) {
+    let url = '/api-ds/dic/listDicValues';
+    Array.isArray(params)
+        ? params.forEach((item, index, arr) => {
+              if (index === 0) {
+                  return (url += '?' + 'codes=' + item);
+              }
+              url += '&' + 'codes=' + item;
+          })
+        : (url += '?' + 'codes=' + params);
+    return api.request({
+        url: url,
+        method: 'GET'
+    });
+}

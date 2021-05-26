@@ -11,6 +11,8 @@ module.exports = {
     rules: {
         'no-console': 'off',
         'no-debugger': 'off',
+        // 允许声明未使用变量
+        'no-unused-vars': 'off',
         'vue/component-tags-order': [
             'error',
             {
