@@ -33,7 +33,7 @@
                     <el-col :span="12">
                         <el-form-item class="fr-form-item">
                             <el-input
-                                v-model="form_data.name"
+                                v-model="form_data.keyText"
                                 placeholder="请输入内容"
                                 style="width: 100%"
                                 class="fr-input fr-input-warning set-h-42"
@@ -164,7 +164,8 @@ let form_data = reactive({
     pageSize: 6,
     endTime: sevenDays(new Date())[1],
     startTime: sevenDays(new Date())[0],
-    status: ''
+    status: '',
+    keyText: ''
 });
 let HomeRecordPopAdd_show = ref(false);
 watch(HomeRecordPopAdd_show, (newValue, oldValue) => {
