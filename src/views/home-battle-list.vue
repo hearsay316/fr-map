@@ -86,6 +86,7 @@
                         v-for="(tableData, index) of baseOptions?.tableData"
                         :key="index"
                         class="home-record-item"
+                        @click="tableData_handle"
                     >
                         <div class="home-record-item-header">
                             <div class="left">{{ tableData?.createTime?.split(' ')?.[0] }}</div>
@@ -106,14 +107,14 @@
                             <div class="home-record-item-operation-btn A cursor">作战记录</div>
                             <div
                                 class="home-record-item-operation-btn B cursor"
-                                @click="remove_handle(tableData)"
+                                @click="remove_handle.prevent(tableData)"
                             >
                                 设备组删除
                             </div>
                             <div class="home-record-item-operation-btn C cursor">修改作战组</div>
                             <div
                                 class="home-record-item-operation-btn D cursor"
-                                @click="reset_handle(tableData)"
+                                @click.prevent="reset_handle(tableData)"
                             >
                                 重置分组设备
                             </div>
@@ -186,6 +187,9 @@ let baseOptions = ref({
 });
 function create_handle() {
     HomeRecordPopAdd_show.value = true;
+}
+function tableData_handle() {
+    console.log(555);
 }
 function remove_handle(tableData) {
     ElMessageBox.confirm('此操作将永久删除, 是否继续?', '提示', {
