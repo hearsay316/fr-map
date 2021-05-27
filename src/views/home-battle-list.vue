@@ -71,7 +71,7 @@
         </header>
         <div class="home-record-battle-list">
             <div class="home-record-battle-type">
-                <div class="home-record-battle-type-A">
+                <div class="home-record-battle-type-A" @click="create_handle">
                     <i class="el-icon-plus plus"></i>
                     <div class="text-color">创建组</div>
                 </div>
@@ -131,7 +131,11 @@
                 </div>
             </div>
         </div>
-        <HomeRecordPopAdd class="home-record-pop-add"></HomeRecordPopAdd>
+        <HomeRecordPopAdd
+            v-if="HomeRecordPopAdd_show"
+            v-model="HomeRecordPopAdd_show"
+            class="home-record-pop-add"
+        ></HomeRecordPopAdd>
     </div>
 </template>
 
@@ -150,8 +154,12 @@ let form_data = reactive({
     startTime: sevenDays(new Date())[0],
     status: ''
 });
+let HomeRecordPopAdd_show = ref(false);
 let form_data_f = computed(() => {
-    form_data.endTime = form_data.endTime && dayjs(form_data.endTime).format('YYYY-MM-DD HH:mm:ss');
+    form_data.endTime =
+        form_data.endTime &&
+        dayjs(form_data.endTime).format('YYYY-MM-DD HH:mm:ss').split(' ')[0] + ' 23:59:59';
+    console.log(form_data.endTime, ' form_data.endTime form_data.endTime');
     form_data.startTime =
         form_data.startTime && dayjs(form_data.startTime).format('YYYY-MM-DD HH:mm:ss');
     return object_remove_null(form_data);
@@ -160,7 +168,9 @@ let baseOptions = ref({
     tableData: [],
     total: 0
 });
-
+function create_handle() {
+    HomeRecordPopAdd_show.value = true;
+}
 const store = useStore();
 let listDic_values = computed(() => store.state.user.listDic_values);
 

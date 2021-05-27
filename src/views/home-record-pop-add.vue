@@ -1,64 +1,55 @@
 <template>
     <div>
         <div class="main">
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item class="fr-pop-form-item" label="作战组名">
-                    <el-input v-model="form.name"></el-input>
+            <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+                <el-form-item class="fr-pop-form-item" prop="teamName" label="作战组名">
+                    <el-input v-model="form.teamName"></el-input>
                 </el-form-item>
-                <el-form-item class="fr-pop-form-item" label="详情描述">
-                    <el-input v-model="form.desc" type="textarea"></el-input>
+                <el-form-item class="fr-pop-form-item" prop="remark" label="详情描述">
+                    <el-input v-model="form.remark" type="textarea"></el-input>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item prop="equipmentIds">
                     <el-row>
                         <el-col :span="12"
                             ><div class="grid-content bg-purple">
-                                <p>使用 scoped slot</p>
-                                <el-tree
-                                    class="fr-el-tree"
-                                    :data="data"
-                                    show-checkbox
-                                    node-key="id"
-                                    default-expand-all
-                                    :expand-on-click-node="false"
-                                >
-                                    <template #default="{ node, data }">
-                                        <span class="custom-tree-node">
-                                            <span>{{ node.label }}</span>
-                                            <span>
-                                                <a @click="append(data)"> Append </a>
-                                                <a @click="remove(node, data)"> Delete </a>
-                                            </span>
-                                        </span>
-                                    </template>
-                                </el-tree>
-                            </div></el-col
-                        >
+                                <p>选择人选</p>
+                                <el-scrollbar class="fr-scrollbar" :height="height_tree">
+                                    <el-tree
+                                        ref="fr_el_tree"
+                                        class="fr-el-tree"
+                                        :data="data"
+                                        :props="defaultProps"
+                                        show-checkbox
+                                        node-key="id"
+                                        default-expand-all
+                                        :expand-on-click-node="false"
+                                        @check-change="handleClick"
+                                    >
+                                    </el-tree>
+                                </el-scrollbar></div
+                        ></el-col>
                         <el-col :span="12"
                             ><div class="grid-content bg-purple-light">
-                                <p>使用 scoped slot</p>
-                                <el-tree
-                                    :data="data"
-                                    show-checkbox
-                                    node-key="id"
-                                    default-expand-all
-                                    :expand-on-click-node="false"
-                                >
-                                    <template #default="{ node, data }">
-                                        <span class="custom-tree-node">
-                                            <span>{{ node.label }}</span>
-                                            <span>
-                                                <a @click="append(data)"> Append </a>
-                                                <a @click="remove(node, data)"> Delete </a>
-                                            </span>
-                                        </span>
-                                    </template>
-                                </el-tree>
-                            </div></el-col
-                        >
+                                <p>已选人员</p>
+                                <el-scrollbar class="fr-scrollbar" :height="height_tree">
+                                    <el-tree
+                                        class="fr-el-tree fr-el-remove"
+                                        :data="checkedData"
+                                        show-checkbox
+                                        node-key="id"
+                                        :props="defaultProps"
+                                        default-expand-all
+                                        :expand-on-click-node="false"
+                                        @check-change="handleClickRemove"
+                                    >
+                                    </el-tree>
+                                </el-scrollbar></div
+                        ></el-col>
                     </el-row>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-form-item class="fr-footer">
+                    <div class="fr-bottom" @click="onSubmit">立即创建</div>
+                    <div class="fr-bottom" @click="$emit('update:modelValue', false)">取消</div>
                 </el-form-item>
             </el-form>
         </div>
@@ -66,75 +57,113 @@
 </template>
 
 <script>
+import { combatTeam_save, userAndEquipment } from '../api/login';
+
 export default {
     name: 'HomeRecordPopAdd',
+    props: {
+        modelValue: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                teamName: '',
+                remark: '',
+                equipmentIds: []
             },
-            data: [
-                {
-                    id: 1,
-                    label: '一级 1',
-                    children: [
-                        {
-                            id: 4,
-                            label: '二级 1-1',
-                            children: [
-                                {
-                                    id: 9,
-                                    label: '三级 1-1-1'
-                                },
-                                {
-                                    id: 10,
-                                    label: '三级 1-1-2'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    label: '一级 2',
-                    children: [
-                        {
-                            id: 5,
-                            label: '二级 2-1'
-                        },
-                        {
-                            id: 6,
-                            label: '二级 2-2'
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    label: '一级 3',
-                    children: [
-                        {
-                            id: 7,
-                            label: '二级 3-1'
-                        },
-                        {
-                            id: 8,
-                            label: '二级 3-2'
-                        }
-                    ]
-                }
-            ]
+            rules: {
+                teamName: [{ required: true, message: '请输入作战组名', trigger: 'blur' }],
+                equipmentIds: [{ required: true, message: '请勾选', trigger: 'change' }],
+                remark: [{ required: true, message: '请填详情描述', trigger: 'blur' }]
+            },
+            data: [],
+            defaultProps: {
+                children: 'rows',
+                label: 'deptName'
+            },
+            checkedData: [],
+            height_tree: (880 / 3840) * 100 * 1 + 'vw'
         };
     },
+    mounted() {
+        this.get_tree();
+    },
     methods: {
+        save_data() {
+            combatTeam_save({});
+        },
+        handleClick(data, checked, node) {
+            if (checked) {
+                console.log(data, checked, node, 'data, checked, node');
+                this.checkedData.push(data);
+                return;
+            }
+            return (this.checkedData = this.checkedDataFnc(this.checkedData, data));
+            // 消除 取消的那一项
+        },
+        checkedDataFnc(checkedData, data) {
+            let length = checkedData.length;
+            const arr = [];
+            for (let i = 0; i < length; i++) {
+                if (checkedData[i].id !== data.id) {
+                    arr.push(checkedData[i]);
+                }
+            }
+            return arr;
+        },
+        get_tree() {
+            userAndEquipment().then((res) => {
+                this.data = this.handler_tree(res);
+                console.log(this.data, 'this.datathis.data');
+            });
+        },
+        handler_tree(arr, num) {
+            if (!arr) return;
+            return arr?.map((item, index) => {
+                item.id = num + '-' + index;
+                if (item.userAndEquipments) {
+                    const userAndEquipments = item.userAndEquipments?.map(
+                        (userAndEquipments, user_index) => {
+                            userAndEquipments['deptName'] = userAndEquipments['userName'];
+                            userAndEquipments.id = index + '-' + user_index;
+                            userAndEquipments.rows = undefined;
+                            return userAndEquipments;
+                        }
+                    );
+                    // 递归函数
+                    item.rows
+                        ? (item.rows = [
+                              ...this.handler_tree(item.rows, index + 1),
+                              ...userAndEquipments
+                          ])
+                        : ((item.rows = userAndEquipments), (item.disabled = true));
+                }
+                return item;
+            });
+        },
         onSubmit() {
-            console.log('submit!');
+            this.form.equipmentIds = this.checkedData.map((item) => {
+                return item.equipmentId;
+            });
+            this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    console.log('submit!');
+                    combatTeam_save(this.form)
+                        .then((res) => {
+                            console.log('combatTeam_savecombatTeam_save');
+                            this.$emit('update:modelValue', false);
+                        })
+                        .catch((error) => {
+                            console.log(555);
+                        });
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         },
         append(data) {
             const newChild = { id: id++, label: 'testtest', children: [] };
@@ -145,40 +174,12 @@ export default {
             this.data = [...this.data];
         },
 
-        remove(node, data) {
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex((d) => d.id === data.id);
-            children.splice(index, 1);
-            this.data = [...this.data];
-        },
-
-        renderContent(h, { node, data, store }) {
-            return h(
-                'span',
-                {
-                    class: 'custom-tree-node'
-                },
-                h('span', null, node.label),
-                h(
-                    'span',
-                    null,
-                    h(
-                        'a',
-                        {
-                            onClick: () => this.append(data)
-                        },
-                        'Append '
-                    ),
-                    h(
-                        'a',
-                        {
-                            onClick: () => this.remove(node, data)
-                        },
-                        'Delete'
-                    )
-                )
-            );
+        handleClickRemove(data, checked) {
+            if (checked) {
+                const index = this.checkedData.findIndex((d) => d.id === data.id);
+                this.checkedData.splice(index, 1);
+                this.$refs.fr_el_tree.setChecked(data, false);
+            }
         }
     }
 };
@@ -191,5 +192,25 @@ export default {
     height: 100%;
     color: white;
     padding: column-width(45);
+}
+.fr-scrollbar {
+    width: column-width(440);
+}
+.fr-footer {
+    display: flex;
+    justify-content: center;
+    margin-left: -15px;
+}
+.fr-bottom {
+    display: inline-block;
+    width: column-width(280);
+    border-radius: column-width(45);
+    border: 1px solid $warningborde;
+    height: column-width(80);
+    text-align: center;
+    color: $warningborde;
+    box-shadow: 0 0 column-width(30) $warningborde inset;
+    cursor: pointer;
+    margin-right: 15px;
 }
 </style>

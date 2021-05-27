@@ -70,3 +70,25 @@ export function listDic_values(params) {
         method: 'GET'
     });
 }
+
+///ds/dept/userAndEquipment
+
+// 天气查询
+export function userAndEquipment(params) {
+    return api.request({
+        url: '/api-ds/dept/userAndEquipment',
+        method: 'GET'
+    });
+}
+///combatTeam/save 保存作战组
+// 天气查询
+export function combatTeam_save(data) {
+    return api.request({
+        url: '/api-ds/combatTeam/save',
+        method: 'post',
+        data,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}

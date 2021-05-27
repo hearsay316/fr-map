@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 export function tableList(get_list_fn, data, type_arrs) {
     return get_list_fn(data).then((res) => {
         if (type_arrs) {
-            let list = res?.list.map((item) => {
+            let list = res?.list?.map((item) => {
                 type_arrs.forEach((type_arr) => {
                     let find_data = type_arr?.data.value?.find((i) => {
                         return i[type_arr.data_type] === item[type_arr.type];
