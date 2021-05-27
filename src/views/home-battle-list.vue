@@ -71,12 +71,12 @@
         </header>
         <div class="home-record-battle-list">
             <div class="home-record-battle-type">
-                <div class="home-record-battle-type-A" @click="create_handle">
+                <div class="home-record-battle-type-A cursor" @click="create_handle">
                     <i class="el-icon-plus plus"></i>
                     <div class="text-color">创建组</div>
                 </div>
-                <div class="home-record-battle-type-B">
-                    <i class="el-icon-plus plus"></i>
+                <div class="home-record-battle-type-B cursor">
+                    <i class="fr-el-icon-type-B"></i>
                     <div class="text-color">管理</div>
                 </div>
             </div>
@@ -212,6 +212,17 @@ onMounted((form_data) => {
         border-radius: 15px;
         margin-bottom: column-width(90);
         box-shadow: 0 0 column-width(50) $warningborde inset;
+        .text-color {
+            color: $warningborde;
+        }
+        .fr-el-icon-type-B {
+            display: block;
+            width: 42px;
+            height: 42px;
+            background: url('../assets/page/home-record-battle-type-B.png');
+            background-size: 100% 100%;
+            margin: 10px auto 0;
+        }
     }
     .home-record-list-main {
         //670*490
@@ -328,8 +339,12 @@ onMounted((form_data) => {
         }
     }
     .text-color {
-        color: $white;
+        color: $primaryborde;
         text-align: center;
+        margin-top: 10px;
+        //font-weight: 600;
+        font-size: 18px;
+        letter-spacing: 3px;
     }
     .plus {
         margin-top: 8px;
