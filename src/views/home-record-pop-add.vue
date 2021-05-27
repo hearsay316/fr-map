@@ -96,6 +96,9 @@ export default {
             combatTeam_save({});
         },
         handleClick(data, checked, node) {
+            this.form.equipmentIds = this.checkedData.map((item) => {
+                return item.equipmentId;
+            });
             if (checked) {
                 console.log(data, checked, node, 'data, checked, node');
                 this.checkedData.push(data);

@@ -150,7 +150,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, onMounted, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { sevenDays } from '../utils/common';
 import { combatTeam_pageList } from '../api/page_list';
@@ -167,6 +167,9 @@ let form_data = reactive({
     status: ''
 });
 let HomeRecordPopAdd_show = ref(false);
+watch(HomeRecordPopAdd_show, (newValue, oldValue) => {
+    newValue == false && currentChange();
+});
 let form_data_f = computed(() => {
     form_data.endTime =
         form_data.endTime &&
