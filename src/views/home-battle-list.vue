@@ -103,10 +103,10 @@
                             </div>
                         </div>
                         <div class="home-record-item-operation">
-                            <div class="home-record-item-operation-btn">作战记录</div>
-                            <div class="home-record-item-operation-btn">作战记录</div>
-                            <div class="home-record-item-operation-btn">作战记录</div>
-                            <div class="home-record-item-operation-btn">作战记录</div>
+                            <div class="home-record-item-operation-btn A cursor">作战记录</div>
+                            <div class="home-record-item-operation-btn B cursor">设备组删除</div>
+                            <div class="home-record-item-operation-btn C cursor">修改作战组</div>
+                            <div class="home-record-item-operation-btn D cursor">重置分组设备</div>
                         </div>
                     </div>
                 </div>
@@ -331,9 +331,28 @@ onMounted((form_data) => {
                 margin-top: column-width(50);
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: column-width(50);
+                gap: column-width(30);
                 .home-record-item-operation-btn {
                     text-align: center;
+                    border: 2px solid #7dedff;
+                    border-radius: 15px;
+                    padding: 3px 0;
+                }
+                .A {
+                    border-color: #7dedff;
+                    background-color: rgba(125, 237, 255, 0.2);
+                }
+                .B {
+                    border-color: #2489cd;
+                    background-color: rgba(36, 137, 205, 0.2);
+                }
+                .C {
+                    border-color: #68859f;
+                    background-color: rgba(104, 133, 159, 0.2);
+                }
+                .D {
+                    border-color: #62a2cd;
+                    background-color: rgba(98, 162, 205, 0.2);
                 }
             }
         }
@@ -351,7 +370,7 @@ onMounted((form_data) => {
         display: block;
         text-align: center;
         width: 100%;
-        font-weight: 600;
+        font-weight: 700;
         color: $white;
         font-size: 42px;
     }
