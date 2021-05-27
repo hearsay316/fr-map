@@ -110,3 +110,12 @@ export function combatTeam_del(data) {
         method: 'DELETE'
     });
 }
+//重置作战组/combatTeam/reset
+
+export function combatTeam_reset(params) {
+    return api.request({
+        url: '/api-ds/combatTeam/reset',
+        method: 'get',
+        params
+    });
+}
