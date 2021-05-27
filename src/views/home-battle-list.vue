@@ -104,7 +104,12 @@
                         </div>
                         <div class="home-record-item-operation">
                             <div class="home-record-item-operation-btn A cursor">作战记录</div>
-                            <div class="home-record-item-operation-btn B cursor">设备组删除</div>
+                            <div
+                                class="home-record-item-operation-btn B cursor"
+                                @click="remove_handle(tableData)"
+                            >
+                                设备组删除
+                            </div>
                             <div class="home-record-item-operation-btn C cursor">修改作战组</div>
                             <div class="home-record-item-operation-btn D cursor">重置分组设备</div>
                         </div>
@@ -147,6 +152,8 @@ import { combatTeam_pageList } from '../api/page_list';
 import { object_remove_null, tableList } from './table-list';
 import HomeRecordPopAdd from './home-record-pop-add.vue';
 import dayjs from 'dayjs';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { combatTeam_del } from '../api/login';
 let form_data = reactive({
     pageNumber: 1,
     pageSize: 6,
@@ -170,6 +177,29 @@ let baseOptions = ref({
 });
 function create_handle() {
     HomeRecordPopAdd_show.value = true;
+}
+function remove_handle(tableData) {
+    console.log(tableData, 'tableData');
+    ElMessageBox.confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
+        .then(() => {
+            combatTeam_del(tableData.id).then(() => {
+                ElMessage({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+                currentChange();
+            });
+        })
+        .catch(() => {
+            // this.$message({
+            //     type: 'info',
+            //     message: '已取消删除'
+            // });
+        });
 }
 const store = useStore();
 let listDic_values = computed(() => store.state.user.listDic_values);

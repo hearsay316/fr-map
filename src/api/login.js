@@ -1,4 +1,5 @@
 import { api } from '../utils/request';
+import da from 'element-plus/packages/locale/lang/da';
 
 console.info(api, '请求的基本配置');
 // const api = {
@@ -82,6 +83,11 @@ export function userAndEquipment(params) {
 }
 ///combatTeam/save 保存作战组
 // 天气查询
+/**
+ * 作战组保存
+ * @param data
+ * @returns {*}
+ */
 export function combatTeam_save(data) {
     return api.request({
         url: '/api-ds/combatTeam/save',
@@ -90,5 +96,17 @@ export function combatTeam_save(data) {
         headers: {
             'Content-Type': 'application/json'
         }
+    });
+}
+///combatTeam/del/{id}
+/**
+ * 删除作战组
+ * @param data
+ * @returns {*}
+ */
+export function combatTeam_del(data) {
+    return api.request({
+        url: '/api-ds/combatTeam/del/' + data,
+        method: 'DELETE'
     });
 }
