@@ -153,7 +153,6 @@ export default {
                     console.log('submit!');
                     combatTeam_save(this.form)
                         .then((res) => {
-                            console.log('combatTeam_savecombatTeam_save');
                             this.$emit('update:modelValue', false);
                         })
                         .catch((error) => {
