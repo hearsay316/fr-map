@@ -1,4 +1,4 @@
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, onMounted, computed, defineAsyncComponent } from 'vue';
 import { useStore } from 'vuex';
 
 export function tableList(get_list_fn, data, type_arrs) {
@@ -35,3 +35,9 @@ export function object_remove_null(objet) {
     }
     return new_object;
 }
+
+export let component_type = {
+    enforce: defineAsyncComponent(() => import('./enforce.vue')), //执行中
+    finished: defineAsyncComponent(() => import('./finished.vue')), //完成
+    unfinished: defineAsyncComponent(() => import('./unfinished.vue')) // 未完成
+};

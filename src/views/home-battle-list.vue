@@ -103,22 +103,27 @@
                                 {{ tableData?.remark }}
                             </div>
                         </div>
-                        <div class="home-record-item-operation">
-                            <div class="home-record-item-operation-btn A cursor">作战记录</div>
-                            <div
-                                class="home-record-item-operation-btn B cursor"
-                                @click="remove_handle.prevent(tableData)"
-                            >
-                                设备组删除
-                            </div>
-                            <div class="home-record-item-operation-btn C cursor">修改作战组</div>
-                            <div
-                                class="home-record-item-operation-btn D cursor"
-                                @click.prevent="reset_handle(tableData)"
-                            >
-                                重置分组设备
-                            </div>
-                        </div>
+                        <component
+                            :is="component_type[tableData?.status]"
+                            :table-data="{ tableData, index }"
+                            class="home-record-item-operation"
+                        ></component>
+                        <!--                        <div class="home-record-item-operation">-->
+                        <!--                            <div class="home-record-item-operation-btn A cursor">作战记录</div>-->
+                        <!--                            <div-->
+                        <!--                                class="home-record-item-operation-btn B cursor"-->
+                        <!--                                @click.prevent="remove_handle(tableData)"-->
+                        <!--                            >-->
+                        <!--                                设备组删除-->
+                        <!--                            </div>-->
+                        <!--                            <div class="home-record-item-operation-btn C cursor">修改作战组</div>-->
+                        <!--                            <div-->
+                        <!--                                class="home-record-item-operation-btn D cursor"-->
+                        <!--                                @click.prevent="reset_handle(tableData)"-->
+                        <!--                            >-->
+                        <!--                                重置分组设备-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <div class="pagination">
@@ -142,6 +147,8 @@
                 </div>
             </div>
         </div>
+
+        <!--        <enforce></enforce>-->
         <HomeRecordPopAdd
             v-if="HomeRecordPopAdd_show"
             v-model="HomeRecordPopAdd_show"
@@ -155,7 +162,7 @@ import { ref, reactive, onMounted, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { sevenDays } from '../utils/common';
 import { combatTeam_pageList } from '../api/page_list';
-import { object_remove_null, tableList } from './table-list';
+import { object_remove_null, tableList, component_type } from './table-list';
 import HomeRecordPopAdd from './home-record-pop-add.vue';
 import dayjs from 'dayjs';
 import { ElMessage, ElMessageBox } from 'element-plus';
