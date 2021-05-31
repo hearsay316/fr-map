@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { combatTeam_save, userAndEquipment } from '../api/login';
+import { byIdGetCombatTeam, combatTeam_save, userAndEquipment } from '../api/login';
 
 export default {
     name: 'HomeRecordManage',
@@ -58,6 +58,12 @@ export default {
         modelValue: {
             type: Boolean,
             default: false
+        },
+        tableData: {
+            type: Object,
+            default() {
+                return null;
+            }
         }
     },
     data() {
@@ -83,8 +89,18 @@ export default {
     },
     mounted() {
         this.get_tree();
+        this.get_byIdGetCombatTeam(this.tableData.tableData.id);
     },
     methods: {
+        get_byIdGetCombatTeam(id) {
+            byIdGetCombatTeam({ id }).then((res) => {
+                this.checkedData =
+                    res?.[0]?.users.map((item) => {
+                        item['deptName'] = item['userName'];
+                        return item;
+                    }) ?? [];
+            });
+        },
         save_data() {
             combatTeam_save({});
         },
@@ -120,7 +136,7 @@ export default {
             if (!arr) return;
             return arr?.map((item, index) => {
                 item.id = num + '-' + index;
-                if (item.userAndEquipments) {
+                if (item?.userAndEquipments) {
                     const userAndEquipments = item.userAndEquipments?.map(
                         (userAndEquipments, user_index) => {
                             userAndEquipments['deptName'] = userAndEquipments['userName'];

@@ -75,7 +75,7 @@
                     <i class="el-icon-plus plus"></i>
                     <div class="text-color">创建组</div>
                 </div>
-                <div v-if="active" class="home-record-battle-type-B cursor">
+                <div v-if="active" class="home-record-battle-type-B cursor" @click="manage_handle">
                     <i class="fr-el-icon-type-B"></i>
                     <div class="text-color">管理</div>
                 </div>
@@ -142,7 +142,12 @@
             class="home-record-pop-add"
         ></HomeRecordPopAdd>
         <!--      管理-->
-        <HomeRecordManage></HomeRecordManage>
+        <HomeRecordManage
+            v-if="HomeRecordPopManage_show"
+            v-model="HomeRecordPopManage_show"
+            class="home-record-pop-add"
+            :table-data="active"
+        ></HomeRecordManage>
     </div>
 </template>
 
@@ -153,6 +158,7 @@ import { sevenDays } from '../utils/common';
 import { combatTeam_pageList } from '../api/page_list';
 import { object_remove_null, tableList, component_type } from './table-list';
 import HomeRecordPopAdd from './home-record-pop-add.vue';
+import HomeRecordManage from './HomeRecordManage.vue';
 import dayjs from 'dayjs';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { combatTeam_del, combatTeam_reset } from '../api/login';
@@ -165,6 +171,7 @@ let form_data = reactive({
     keyText: ''
 });
 let HomeRecordPopAdd_show = ref(false);
+let HomeRecordPopManage_show = ref(false);
 watch(HomeRecordPopAdd_show, (newValue, oldValue) => {
     newValue == false && currentChange();
 });
@@ -184,6 +191,9 @@ let baseOptions = ref({
 let active = ref(null);
 function create_handle() {
     HomeRecordPopAdd_show.value = true;
+}
+function manage_handle() {
+    HomeRecordPopManage_show.value = true;
 }
 function tableData_handle(tableData, index) {
     console.log(tableData);
