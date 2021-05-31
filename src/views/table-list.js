@@ -35,7 +35,15 @@ export function object_remove_null(objet) {
     }
     return new_object;
 }
-
+export function processing_data(data, arr) {
+    arr?.forEach((item) => {
+        let find_data = item?.data.value?.find((i) => {
+            return i[item.data_type] === data[item.type];
+        });
+        find_data ? (data[item.newType] = find_data[item.data_value]) : void 0;
+    });
+    return data;
+}
 export let component_type = {
     enforce: defineAsyncComponent(() => import('./enforce.vue')), //执行中
     finished: defineAsyncComponent(() => import('./finished.vue')), //完成
