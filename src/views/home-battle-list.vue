@@ -75,7 +75,7 @@
                     <i class="el-icon-plus plus"></i>
                     <div class="text-color">创建组</div>
                 </div>
-                <div class="home-record-battle-type-B cursor">
+                <div v-if="active" class="home-record-battle-type-B cursor">
                     <i class="fr-el-icon-type-B"></i>
                     <div class="text-color">管理</div>
                 </div>
@@ -86,7 +86,8 @@
                         v-for="(tableData, index) of baseOptions?.tableData"
                         :key="index"
                         class="home-record-item"
-                        @click="tableData_handle"
+                        :class="{ active: active?.index === index }"
+                        @click="tableData_handle(tableData, index)"
                     >
                         <div class="home-record-item-header">
                             <div class="left">{{ tableData?.createTime?.split(' ')?.[0] }}</div>
@@ -107,23 +108,8 @@
                             :is="component_type[tableData?.status]"
                             :table-data="{ tableData, index }"
                             class="home-record-item-operation"
+                            @update="currentChange"
                         ></component>
-                        <!--                        <div class="home-record-item-operation">-->
-                        <!--                            <div class="home-record-item-operation-btn A cursor">作战记录</div>-->
-                        <!--                            <div-->
-                        <!--                                class="home-record-item-operation-btn B cursor"-->
-                        <!--                                @click.prevent="remove_handle(tableData)"-->
-                        <!--                            >-->
-                        <!--                                设备组删除-->
-                        <!--                            </div>-->
-                        <!--                            <div class="home-record-item-operation-btn C cursor">修改作战组</div>-->
-                        <!--                            <div-->
-                        <!--                                class="home-record-item-operation-btn D cursor"-->
-                        <!--                                @click.prevent="reset_handle(tableData)"-->
-                        <!--                            >-->
-                        <!--                                重置分组设备-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
                 <div class="pagination">
@@ -149,11 +135,14 @@
         </div>
 
         <!--        <enforce></enforce>-->
+        <!--      添加-->
         <HomeRecordPopAdd
             v-if="HomeRecordPopAdd_show"
             v-model="HomeRecordPopAdd_show"
             class="home-record-pop-add"
         ></HomeRecordPopAdd>
+        <!--      管理-->
+        <HomeRecordManage></HomeRecordManage>
     </div>
 </template>
 
@@ -192,11 +181,16 @@ let baseOptions = ref({
     tableData: [],
     total: 0
 });
+let active = ref(null);
 function create_handle() {
     HomeRecordPopAdd_show.value = true;
 }
-function tableData_handle() {
-    console.log(555);
+function tableData_handle(tableData, index) {
+    console.log(tableData);
+    if (tableData.status != 'unfinished') {
+        return (active.value = null);
+    }
+    active.value = { tableData, index };
 }
 function remove_handle(tableData) {
     ElMessageBox.confirm('此操作将永久删除, 是否继续?', '提示', {
@@ -246,6 +240,7 @@ const store = useStore();
 let listDic_values = computed(() => store.state.user.listDic_values);
 
 function currentChange() {
+    active.value = null;
     tableList(combatTeam_pageList, form_data_f.value, [
         {
             data: listDic_values,
@@ -305,6 +300,7 @@ onMounted((form_data) => {
             gap: column-width(50);
             color: $white;
         }
+
         .home-record-item {
             border: 2px solid #3b4d5d;
             border-radius: 15px;
@@ -427,6 +423,9 @@ onMounted((form_data) => {
                 }
             }
         }
+        .home-record-item.active {
+            box-shadow: 0 0 column-width(25) $warningborde inset, 10px 10px 10px #000000;
+        }
     }
     .text-color {
         color: $primaryborde;
@@ -445,14 +444,5 @@ onMounted((form_data) => {
         color: $white;
         font-size: 42px;
     }
-}
-.home-record-pop-add {
-    position: absolute;
-    right: 0;
-    top: 68px;
-    width: column-width(1595);
-    height: column-width(1590);
-    background-size: 100% 100%;
-    background-image: url('../assets/page/home-create.png');
 }
 </style>

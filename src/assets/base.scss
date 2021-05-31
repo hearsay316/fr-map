@@ -296,6 +296,9 @@ $warningborde:#d2d72e;
   .el-form-item__label{
     color: $white;
   }
+  .el-textarea__inner{
+    height: 650px;
+  }
   .el-input__inner{
     border: 1px solid $bordercolor;
     color: $white;
@@ -391,4 +394,25 @@ $warningborde:#d2d72e;
     background: $myColor;
     color: $white;
   }
+}
+//.home_modify_combat_team{
+//  position: absolute;
+//  top: 0;
+//  right: 0;
+//  width: 500px;
+//  height: 600px;
+//  background-color: white;
+//  z-index: 3;
+//  padding: 30px;
+//  border-radius: 15px;
+//}
+.home-record-pop-add {
+  position: absolute;
+  right: 0;
+  top: 68px;
+  width: column-width(1595);
+  height: column-width(1590);
+  background-size: 100% 100%;
+  background-image: url('../assets/page/home-create.png');
+  z-index: 666;
 }

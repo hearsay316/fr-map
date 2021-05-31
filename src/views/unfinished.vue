@@ -7,7 +7,9 @@
         >
             设备组删除
         </div>
-        <div class="home-record-item-operation-btn C cursor">修改作战组</div>
+        <div class="home-record-item-operation-btn C cursor" @click.prevent="handle_click_revise">
+            修改作战组
+        </div>
         <div
             class="home-record-item-operation-btn D cursor"
             @click.prevent="open_handle(tableData)"
@@ -19,21 +21,30 @@
             :id="tableData?.tableData?.id"
             v-model="unfinished_open_dialog"
         ></home_view_combat_team>
+        <unfinished_revise_com
+            v-if="unfinished_revise_dialog"
+            v-model="unfinished_revise_dialog"
+            :table-data="tableData"
+            @update="$emit('update')"
+        >
+        </unfinished_revise_com>
     </div>
 </template>
 
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { byIdGetCombatTeam, combatTeam_del, combatTeam_reset } from '../api/login';
-import { computed, defineProps, onMounted, ref } from 'vue';
+import { computed, defineProps, onMounted, ref, defineEmit } from 'vue';
 import { useStore } from 'vuex';
 import home_view_combat_team from './home-view-combat-team.vue';
+import unfinished_revise_com from './unfinished_revise_dialog.vue';
 let Props = defineProps({
     tableData: Object
 });
+defineEmit(['update']);
 let unfinished_open_dialog = ref(false);
 let unfinished_open_data = ref(null);
-
+let unfinished_revise_dialog = ref(false);
 onMounted(() => {
     console.log(Props, 'tableDatatableData');
 });
@@ -84,6 +95,10 @@ function reset_handle(tableData) {
 function open_handle(tableData) {
     unfinished_open_dialog.value = true;
     console.log(tableData, 'tableDatatableData');
+}
+function handle_click_revise() {
+    console.log(666555);
+    unfinished_revise_dialog.value = true;
 }
 function close_handle() {
     unfinished_open_dialog.value = false;

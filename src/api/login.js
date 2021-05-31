@@ -127,3 +127,14 @@ export function byIdGetCombatTeam(params) {
         params
     });
 }
+// 修改作战组  /combatTeam/update
+export function combatTeam_update(data) {
+    return api.request({
+        url: '/api-ds/combatTeam/update',
+        method: 'put',
+        data,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}

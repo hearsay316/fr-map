@@ -1,33 +1,42 @@
 <template>
-    <div>
-        <div class="main">
-            <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-                <el-form-item class="fr-pop-form-item" prop="teamName" label="作战组名">
-                    <el-input v-model="form.teamName"></el-input>
-                </el-form-item>
-                <el-form-item class="fr-pop-form-item" prop="remark" label="详情描述">
-                    <el-input v-model="form.remark" type="textarea"></el-input>
-                </el-form-item>
-                <el-form-item class="fr-footer">
-                    <div class="fr-bottom" @click="onSubmit">立即创建</div>
-                    <div class="fr-bottom" @click="$emit('update:modelValue', false)">取消</div>
-                </el-form-item>
-            </el-form>
+    <teleport to=".home-battle-list">
+        <div class="home_modify_combat_team home-record-pop-add">
+            <div class="main">
+                <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+                    <el-form-item class="fr-pop-form-item" prop="teamName" label="作战组名">
+                        <el-input v-model="form.teamName"></el-input>
+                    </el-form-item>
+                    <el-form-item class="fr-pop-form-item" prop="remark" label="详情描述">
+                        <el-input v-model="form.remark" type="textarea"></el-input>
+                    </el-form-item>
+                    <el-form-item class="fr-footer">
+                        <div class="fr-bottom" @click="onSubmit">保存修改</div>
+                        <div class="fr-bottom" @click="$emit('update:modelValue', false)">取消</div>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
-    </div>
+    </teleport>
 </template>
 
 <script>
-import { combatTeam_save, userAndEquipment } from '../api/login';
+import { combatTeam_save, combatTeam_update, userAndEquipment } from '../api/login';
 
 export default {
-    name: 'HomeRecordPopAdd',
+    name: 'UnfinishedReviseDialog',
     props: {
         modelValue: {
             type: Boolean,
             default: false
+        },
+        tableData: {
+            type: Object,
+            default() {
+                return {};
+            }
         }
     },
+    emits: ['update:modelValue', 'update'],
     data() {
         return {
             form: {
@@ -47,6 +56,11 @@ export default {
             height_tree: (880 / 3840) * 100 * 1 + 'vw'
         };
     },
+    created() {
+        this.form.remark = this.tableData.tableData.remark;
+        this.form.teamName = this.tableData.tableData.teamName;
+        console.log(this.tableData.tableData);
+    },
     methods: {
         save_data() {
             combatTeam_save({});
@@ -54,10 +68,15 @@ export default {
         onSubmit() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
-                    console.log('submit!');
-                    combatTeam_save(this.form)
+                    console.log('submit!', this.tableData.tableData.teamId);
+                    let data = {
+                        ...this.form,
+                        teamId: this.tableData.tableData.id
+                    };
+                    combatTeam_update(data)
                         .then((res) => {
                             this.$emit('update:modelValue', false);
+                            this.$emit('update');
                         })
                         .catch((error) => {
                             console.log(555);
