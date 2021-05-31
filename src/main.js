@@ -89,7 +89,9 @@ import {
     ElMessage,
     ElMessageBox,
     ElNotification,
-    locale
+    locale,
+    ElDescriptions,
+    ElDescriptionsItem
 } from 'element-plus';
 
 const components = [
@@ -170,7 +172,9 @@ const components = [
     ElTooltip,
     ElTransfer,
     ElTree,
-    ElUpload
+    ElUpload,
+    ElDescriptions,
+    ElDescriptionsItem
 ];
 const plugins = [ElInfiniteScroll, ElLoading, ElMessage, ElMessageBox, ElNotification];
 try {

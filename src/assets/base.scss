@@ -373,3 +373,22 @@ $warningborde:#d2d72e;
 .cursor{
   cursor: pointer;
 }
+.unfinished-dialog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  background-color: white;
+  z-index: 3;
+  padding: 30px;
+  border-radius: 15px;
+  .close_handle{
+    margin: 15px auto;
+    padding: 10px;
+    text-align: center;
+  }
+  .close_handle:hover{
+    background: $myColor;
+    color: $white;
+  }
+}

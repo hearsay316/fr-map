@@ -119,3 +119,11 @@ export function combatTeam_reset(params) {
         params
     });
 }
+// 查看作战组 /combatTeam/byIdGetCombatTeam
+export function byIdGetCombatTeam(params) {
+    return api.request({
+        url: '/api-ds/combatTeam/byIdGetCombatTeam',
+        method: 'get',
+        params
+    });
+}

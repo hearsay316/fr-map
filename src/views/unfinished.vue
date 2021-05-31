@@ -10,21 +10,64 @@
         <div class="home-record-item-operation-btn C cursor">修改作战组</div>
         <div
             class="home-record-item-operation-btn D cursor"
-            @click.prevent="reset_handle(tableData)"
+            @click.prevent="open_handle(tableData)"
         >
             查看作战组
         </div>
+        <teleport to=".home-battle-list">
+            <div v-if="unfinished_open_dialog" class="unfinished-dialog">
+                <el-descriptions
+                    v-if="unfinished_open_data"
+                    title="详情"
+                    direction="vertical"
+                    :column="2"
+                    border
+                >
+                    <template #extra>
+                        <el-button type="primary" size="small">{{
+                            unfinished_open_data?.status_str
+                        }}</el-button>
+                    </template>
+                    <el-descriptions-item label="作战组名">{{
+                        unfinished_open_data?.teamName
+                    }}</el-descriptions-item>
+                    <el-descriptions-item label="详情描述"
+                        >{{ unfinished_open_data?.teamName }}}</el-descriptions-item
+                    >
+                    <template v-for="user of unfinished_open_data?.users" :key="user.userId">
+                        <el-descriptions-item label="用户名">{{
+                            user?.userName
+                        }}</el-descriptions-item>
+                        <el-descriptions-item label="用户ID">{{
+                            user?.userId
+                        }}</el-descriptions-item>
+                        <el-descriptions-item label="设备名称">{{
+                            user?.equipmentName
+                        }}</el-descriptions-item>
+                        <el-descriptions-item label="设备编号">{{
+                            user?.equipmentId
+                        }}</el-descriptions-item>
+                    </template>
+                </el-descriptions>
+                <div class="cursor close_handle" @click="close_handle">关闭</div>
+            </div>
+        </teleport>
     </div>
 </template>
 
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { combatTeam_del, combatTeam_reset } from '../api/login';
-import { defineProps, onMounted } from 'vue';
+import { byIdGetCombatTeam, combatTeam_del, combatTeam_reset } from '../api/login';
+import { computed, defineProps, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 
 let Props = defineProps({
     tableData: Object
 });
+let unfinished_open_dialog = ref(false);
+let unfinished_open_data = ref(null);
+const store = useStore();
+let listDic_values = computed(() => store.state.user.listDic_values);
 onMounted(() => {
     console.log(Props, 'tableDatatableData');
 });
@@ -71,6 +114,41 @@ function reset_handle(tableData) {
             //     message: '已取消删除'
             // });
         });
+}
+function open_handle(tableData) {
+    console.log(tableData, 'tableDatatableData');
+
+    const id = tableData.tableData.id;
+    byIdGetCombatTeam({ id })
+        .then((res) => {
+            unfinished_open_dialog.value = true;
+            unfinished_open_data.value = processing_data(res?.[0], [
+                {
+                    data: listDic_values,
+                    data_type: 'dicValueCode',
+                    data_value: 'dicValueText',
+                    type: 'status',
+                    newType: 'status_str'
+                }
+            ]);
+
+            console.log(unfinished_open_data.value, 'ididid');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+function close_handle() {
+    unfinished_open_dialog.value = false;
+}
+function processing_data(data, arr) {
+    arr.forEach((item) => {
+        let find_data = item?.data.value?.find((i) => {
+            return i[item.data_type] === data[item.type];
+        });
+        find_data ? (data[item.newType] = find_data[item.data_value]) : void 0;
+    });
+    return data;
 }
 </script>
 
