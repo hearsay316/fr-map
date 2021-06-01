@@ -43,7 +43,7 @@
                 </el-form-item>
                 <el-form-item class="fr-footer">
                     <div class="fr-bottom" @click="reset_handle">重置绑定</div>
-                    <div class="fr-bottom" @click="$emit('update:modelValue', false)">取消</div>
+                    <div class="fr-bottom" @click="$emit('update:modelValue', false)">关闭</div>
                 </el-form-item>
             </el-form>
         </div>
@@ -90,8 +90,7 @@ export default {
         };
     },
     mounted() {
-        this.get_tree();
-        this.get_byIdGetCombatTeam(this.tableData.tableData.id);
+        this.refresh();
     },
     methods: {
         reset_handle() {
@@ -107,9 +106,8 @@ export default {
             };
             unBundlingEquipment(record)
                 .then((res) => {
-                    console.log(res, 'res');
                     this.refresh();
-                    this.$message.success('解绑成功');
+                    this.$message.success('重置成功');
                 })
                 .catch((error) => {
                     console.error(error, 'errorerror');
@@ -136,7 +134,6 @@ export default {
                 return item.equipmentId;
             });
             if (checked) {
-                console.log(data, checked, node, 'data, checked, node');
                 this.set_bindingEquipment(data, this.tableData);
                 return;
             }
@@ -144,14 +141,12 @@ export default {
             // 消除 取消的那一项
         },
         set_bindingEquipment(data, tableData) {
-            console.log(data, tableData, 'tableDatatableDatatableData');
             let record = {
                 equipmentIds: [data.equipmentId],
                 teamId: tableData.tableData.id
             };
             bindingEquipment(record)
                 .then((res) => {
-                    console.log(res, 'res');
                     this.refresh();
                     this.$message.success('绑定成功');
                 })
@@ -170,10 +165,13 @@ export default {
             return arr;
         },
         get_tree() {
-            userAndEquipment().then((res) => {
-                this.data = this.handler_tree(res);
-                console.log(this.data, 'this.datathis.data');
-            });
+            userAndEquipment()
+                .then((res) => {
+                    this.data = this.handler_tree(res);
+                })
+                .catch((error) => {
+                    console.error(error, 'error');
+                });
         },
         handler_tree(arr, num) {
             if (!arr) return;
@@ -199,35 +197,6 @@ export default {
                 return item;
             });
         },
-        onSubmit() {
-            this.form.equipmentIds = this.checkedData.map((item) => {
-                return item.equipmentId;
-            });
-            this.$refs['form'].validate((valid) => {
-                if (valid) {
-                    console.log('submit!');
-                    combatTeam_save(this.form)
-                        .then((res) => {
-                            this.$emit('update:modelValue', false);
-                        })
-                        .catch((error) => {
-                            console.log(555);
-                        });
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-        },
-        append(data) {
-            const newChild = { id: id++, label: 'testtest', children: [] };
-            if (!data.children) {
-                data.children = [];
-            }
-            data.children.push(newChild);
-            this.data = [...this.data];
-        },
-
         handleClickRemove(data, checked) {
             if (checked) {
                 // const index = this.checkedData.findIndex((d) => d.id === data.id);

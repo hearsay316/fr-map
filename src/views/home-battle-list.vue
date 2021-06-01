@@ -317,6 +317,7 @@ onMounted((form_data) => {
             background-color: #152435;
             box-shadow: 0 0 column-width(15) $primaryborde inset, 10px 10px 10px #000000;
             padding: column-width(30);
+            cursor: pointer;
             .home-record-item-header {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
