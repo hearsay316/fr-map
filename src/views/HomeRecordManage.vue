@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="main">
-            <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+            <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item prop="equipmentIds">
                     <el-row>
                         <el-col :span="12"
@@ -42,6 +42,7 @@
                     </el-row>
                 </el-form-item>
                 <el-form-item class="fr-footer">
+                    <div class="fr-bottom" @click="reset_handle">重置绑定</div>
                     <div class="fr-bottom" @click="$emit('update:modelValue', false)">取消</div>
                 </el-form-item>
             </el-form>
@@ -50,7 +51,13 @@
 </template>
 
 <script>
-import { byIdGetCombatTeam, combatTeam_save, userAndEquipment } from '../api/login';
+import {
+    bindingEquipment,
+    byIdGetCombatTeam,
+    combatTeam_save,
+    unBundlingEquipment,
+    userAndEquipment
+} from '../api/login';
 
 export default {
     name: 'HomeRecordManage',
@@ -73,11 +80,6 @@ export default {
                 remark: '',
                 equipmentIds: []
             },
-            rules: {
-                teamName: [{ required: true, message: '请输入作战组名', trigger: 'blur' }],
-                equipmentIds: [{ required: true, message: '请勾选', trigger: 'change' }],
-                remark: [{ required: true, message: '请填详情描述', trigger: 'blur' }]
-            },
             data: [],
             defaultProps: {
                 children: 'rows',
@@ -92,6 +94,31 @@ export default {
         this.get_byIdGetCombatTeam(this.tableData.tableData.id);
     },
     methods: {
+        reset_handle() {
+            if (!this.checkedData.length) {
+                return this.$message.success('暂无绑定');
+            }
+            const equipmentIds = this.checkedData.map((item) => {
+                return item.equipmentId;
+            });
+            let record = {
+                equipmentIds: equipmentIds,
+                teamId: this.tableData.tableData.id
+            };
+            unBundlingEquipment(record)
+                .then((res) => {
+                    console.log(res, 'res');
+                    this.refresh();
+                    this.$message.success('解绑成功');
+                })
+                .catch((error) => {
+                    console.error(error, 'errorerror');
+                });
+        },
+        refresh() {
+            this.get_tree();
+            this.get_byIdGetCombatTeam(this.tableData.tableData.id);
+        },
         get_byIdGetCombatTeam(id) {
             byIdGetCombatTeam({ id }).then((res) => {
                 this.checkedData =
@@ -110,11 +137,27 @@ export default {
             });
             if (checked) {
                 console.log(data, checked, node, 'data, checked, node');
-                this.checkedData.push(data);
+                this.set_bindingEquipment(data, this.tableData);
                 return;
             }
             return (this.checkedData = this.checkedDataFnc(this.checkedData, data));
             // 消除 取消的那一项
+        },
+        set_bindingEquipment(data, tableData) {
+            console.log(data, tableData, 'tableDatatableDatatableData');
+            let record = {
+                equipmentIds: [data.equipmentId],
+                teamId: tableData.tableData.id
+            };
+            bindingEquipment(record)
+                .then((res) => {
+                    console.log(res, 'res');
+                    this.refresh();
+                    this.$message.success('绑定成功');
+                })
+                .catch((error) => {
+                    console.error(error, 'error');
+                });
         },
         checkedDataFnc(checkedData, data) {
             let length = checkedData.length;
@@ -187,10 +230,26 @@ export default {
 
         handleClickRemove(data, checked) {
             if (checked) {
-                const index = this.checkedData.findIndex((d) => d.id === data.id);
-                this.checkedData.splice(index, 1);
-                this.$refs.fr_el_tree.setChecked(data, false);
+                // const index = this.checkedData.findIndex((d) => d.id === data.id);
+                // this.checkedData.splice(index, 1);
+                // this.$refs.fr_el_tree.setChecked(data, false);
+                this.set_unBundlingEquipment(data, this.tableData);
             }
+        },
+        set_unBundlingEquipment(data, tableData) {
+            let record = {
+                equipmentIds: [data.equipmentId],
+                teamId: tableData.tableData.id
+            };
+            unBundlingEquipment(record)
+                .then((res) => {
+                    console.log(res, 'res');
+                    this.refresh();
+                    this.$message.success('解绑成功');
+                })
+                .catch((error) => {
+                    console.error(error, 'errorerror');
+                });
         }
     }
 };

@@ -138,3 +138,26 @@ export function combatTeam_update(data) {
         }
     });
 }
+///combatTeam/bindingEquipment 作战组下设备绑定
+export function bindingEquipment(data) {
+    return api.request({
+        url: '/api-ds/combatTeam/bindingEquipment',
+        method: 'put',
+        data,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+// /combatTeam/unBundlingEquipment 解绑
+
+export function unBundlingEquipment(data) {
+    return api.request({
+        url: '/api-ds/combatTeam/unBundlingEquipment',
+        method: 'put',
+        data,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
